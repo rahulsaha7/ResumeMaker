@@ -9,9 +9,13 @@
 //tomorrow create private empty repo and push this login data to remp with proper call formatting
 
 
+$status = 0;
+$data = false;
+$message = "";
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-
+        $status = 1;
         extract($_POST);
         $email = cleanData($email);
         $name = cleanData($name);
@@ -32,15 +36,30 @@
          if($db->sql_query->rowCount() > 0){
 
                 
-                echo "successfull";
+            $data = true;
+            $message = "Registration Successfull";
                 
+         }else{
+            $data = false;
+            $message = "User is already exists"; 
          }
         
     $db->close_connection();
 
     }else{
-        echo "error will be return with cross browser not supporting";
+        $status = 2;
+        $message = "unsupported request type";
     }
+
+
+    $result = array(
+        "status"=>$status,
+        "data"=>$data,
+        "message"=>$message
+    );
+    echo json_encode($result);
+
+
 
     function cleanData($data) {
         $data = trim($data);

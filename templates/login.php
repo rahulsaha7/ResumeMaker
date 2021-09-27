@@ -1,9 +1,13 @@
 <?php
     
-  
+    $status = 0;
+    $data = false;
+    $message = " ";
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        $status = 1;
+        
 
         extract($_POST);
         $email = cleanData($email);
@@ -21,22 +25,33 @@
                 $result = $db->sql_query->fetchAll(PDO::FETCH_ASSOC);
                 
                if(password_verify($password,$result[0]['password'])){
-                   echo "login successfull";
+                   $data = true;
+                   $message = "Login Successfull";
                }else{
-                   echo "password Missmatch";
+                $data = false;
+                $message = "Password Missmatched";
                }
                 
          }
          else{
-             echo "username doesn't exixst";
+            $data = false;
+            $message = "username doesn't exixst";
          }
         
 
     
 
     }else{
-        echo "error will be return with cross browser not supporting";
+        $status = 2;
+        
+        $message = "Something went Wrong";
     }
+    $result = array(
+        "status"=>$status,
+        "data"=>$data,
+        "message"=>$message
+    );
+    echo json_encode($result);
     $db->close_connection();
 
     function cleanData($data) {
