@@ -6,4 +6,10 @@ This repo consists of backend code for resume maker mobile applicaton.
 
 //Database connection and retrieval is done with both login signup
 
-//Responding with a json response is the next step
+//Basic Response with json data is done 
+
+//Update everything in class 
+
+//Check if user exist or not while inserting data while registration
+
+//Enable session page to return data if session is or else return false
