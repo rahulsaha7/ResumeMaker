@@ -13,3 +13,5 @@ This repo consists of backend code for resume maker mobile applicaton.
 //Check if user exist or not while inserting data while registration
 
 //Enable session page to return data if session is or else return false
+
+//In final Submission, error_reporting for php files should be set to none 
