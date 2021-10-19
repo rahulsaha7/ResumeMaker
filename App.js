@@ -7,6 +7,11 @@ import  {name as appName } from './app.json';
 
 import OnboardingScreen from './component/OnboardingScreen';
 import SignIn from './component/SignIn';
+import SignUp from './component/SignUp';
+import AppBar from './component/AppBar';
+import Dashboard from './component/Dashboard';
+
+
 
 const theme = {
   ...DefaultTheme,
@@ -23,7 +28,7 @@ const theme = {
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <SignIn/>
+      <Dashboard/>
     </PaperProvider>
   );
 }
