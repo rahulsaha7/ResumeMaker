@@ -27,7 +27,8 @@ class Signup
         $this->request = $_SERVER['REQUEST_METHOD'];
 
         $this->request == 'GET' ? extract($_GET) : extract($_POST);
-        // try {
+
+        //This line of code checck if any empty data is send by client
 
         if (!isset($email) || !isset($f_name) || !isset($phone) || !isset($password) || empty($f_name) || empty($email) || empty($phone) || empty($password)) {
 

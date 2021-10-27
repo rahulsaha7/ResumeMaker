@@ -18,6 +18,8 @@ class login
         $this->request = $_SERVER['REQUEST_METHOD'];
         $this->request == 'GET' ? extract($_GET) : extract($_POST);
 
+        //This line of code checck if any empty data is send by client
+
         if (!isset($password) || !isset($email) || empty($password) || empty($email)) {
 
             $this->data = false;
