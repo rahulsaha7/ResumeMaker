@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import {Image, View, StyleSheet } from 'react-native'
+import {Image, View, StyleSheet, Text } from 'react-native'
 import Onboarding from 'react-native-onboarding-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Button } from 'react-native-paper';
 
 export default class OnboardingScreen extends Component {   
   storeData = async (key,value) => {
@@ -13,7 +14,7 @@ export default class OnboardingScreen extends Component {
     }
   }
   hideOnBoardingScreen = ()=>{
-    this.storeData('firstTime',JSON.stringify({isFirstTime:false}));
+    this.storeData('firstTime','No');
     //this.props.onStatusChange(false);
   }
   render() {
@@ -32,13 +33,37 @@ export default class OnboardingScreen extends Component {
                   bottomBarHeight={65}
                   titleStyles={{fontFamily: 'Roboto',fontWeight:'bold'}}
                   subTitleStyles = {{fontFamily: 'Roboto'}}
+                  bottomBarHighlight = {false}
+                  DoneButtonComponent={()=>{
+                    return <Button style={styles.startButton} mode="contained" onPress={() => {this.hideOnBoardingScreen();this.props.onClickStart()}}>
+                            Let's Start
+                          </Button>
+                  }}
                   pages={[
                       {
                       backgroundColor: 'transparent',
                       image: <Image style={{height:170,width:280}} source={require('./../assets/onboarding.png')} />,
                       title: 'Easy Resume',
                       subtitle: 'Make resume in simple 3 steps',
-                      }
+                      },
+                      {
+                      backgroundColor: 'transparent',
+                      image: <Image style={{height:170,width:280}} source={require('./../assets/onboarding.png')} />,
+                      title: 'Step 1',
+                      subtitle: 'Fill necessary details',
+                      },
+                      {
+                      backgroundColor: 'transparent',
+                      image: <Image style={{height:170,width:280}} source={require('./../assets/onboarding.png')} />,
+                      title: 'Step 2',
+                      subtitle: 'Choose a template',
+                      },
+                      {
+                      backgroundColor: 'transparent',
+                      image: <Image style={{height:170,width:280}} source={require('./../assets/onboarding.png')} />,
+                      title: 'Step 3',
+                      subtitle: 'Download and Share',
+                      },
                   ]}
                   />
             </View>
@@ -55,5 +80,9 @@ const styles = StyleSheet.create({
         position:'absolute',
         height:'100%',
         width:'100%',
+    },
+    startButton:{
+      backgroundColor: '#fff',
+      marginRight: 5,
     }
 });

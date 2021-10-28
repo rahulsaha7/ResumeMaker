@@ -64,7 +64,7 @@ class SignIn extends Component {
                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row',marginBottom:10}}>
                         <Text style={{fontSize:16}}>Don’t have an account ?</Text>
                         <Pressable
-                            onPress={() => console.log('Sign Up')}>
+                            onPress={() => this.props.openSignUpPage()}>
                             <Text style={[styles.forgotPassword,{color:colors.primaryText,fontWeight:'bold'}]}> Sign Up</Text>
                         </Pressable>
                     </View>
