@@ -34,17 +34,20 @@ For login
 
 ```
 Endpoint : baseurl/login
-Or
+
+        OR
+
 Endpoint : baseurl/index.php/login
+
 ```
 
 ```
-    Patameters :
+    ## Parameters :
 
             `email`
             `password`
 
-    Please be sure that the names of `parameters` should be same as above
+    Please be sure that the names of [Parameters](parameters) should be same as above
 
 
 
