@@ -206,4 +206,4 @@ Please be sure that the names of `Parameters` should be same as above
 
 Please be sure that the names of `Parameters` should be same as above
 
-Please make sure that the `error_reporting` is set to `1` if you want to see errors.
+Please make sure that the `error_reporting` is set to `-1` if you want to see errors.
