@@ -30,7 +30,7 @@ class Signup
 
         //This line of code checck if any empty data is send by client
 
-        if (!isset($email) || !isset($f_name) || !isset($phone) || !isset($password) || empty($f_name) || empty($email) || empty($phone) || empty($password)) {
+        if (!isset($email) || !isset($username) || !isset($phone) || !isset($password) || empty($username) || empty($email) || empty($phone) || empty($password)) {
 
             $this->data = false;
 
@@ -40,7 +40,7 @@ class Signup
                 $this->message = 'phone field shold not be empty';
             } else if (!isset($password) || empty($password)) {
                 $this->message = 'Password field  shold not be empty';
-            } else if (!isset($f_name) || empty($f_name)) {
+            } else if (!isset($username) || empty($username)) {
                 $this->message = 'name field shold not be empty';
             } else {
                 $this->message = "Looks like some data is empty";
@@ -49,13 +49,13 @@ class Signup
 
         } else {
             $email = $this->cleanData($email);
-            $f_name = $this->cleanData($f_name);
+            $username = $this->cleanData($username);
             $phone = $this->cleanData($phone);
 
             $this->id = strtotime('now');
             $this->date = date("Y-m-d", strtotime("now"));
             $password = password_hash($password, PASSWORD_BCRYPT);
-            $this->values = array($this->id, $f_name, $email, $phone, $password, $this->date);
+            $this->values = array($this->id, $username, $email, $phone, $password, $this->date);
             $this->register();
         }
 
