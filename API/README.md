@@ -18,6 +18,12 @@ Project is created with:
 
 - php
 
+## Setup
+
+- download this file in local machine using git fetch command
+- run the index.php file in local machine using local server
+- change the db config file according to your database configuration
+
 <b>
 For login
 </b>
