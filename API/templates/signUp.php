@@ -53,6 +53,7 @@ class Signup
             $phone = $this->cleanData($phone);
 
             $this->id = strtotime('now');
+            
             $this->date = date("Y-m-d", strtotime("now"));
             $password = password_hash($password, PASSWORD_BCRYPT);
             $this->values = array($this->id, $username, $email, $phone, $password, $this->date);
@@ -73,7 +74,7 @@ class Signup
     {
 
         $email = $this->values[2];
-        $this->sql = "SELECT id from auth where email = '$email'";
+        $this->sql = "SELECT userID from auth where email = '$email'";
 
         $this->db = new database();
         $this->db->query($this->sql);
@@ -83,7 +84,7 @@ class Signup
             $this->message = "Username already exist";
         } else {
 
-            $this->sql = "INSERT into auth (id,name,email,phone,password,joinDate) values(?,?,?,?,?,?)";
+            $this->sql = "INSERT into auth (userID,name,email,phone,password,joinDate) values(?,?,?,?,?,?)";
             $this->db->query_value($this->sql, $this->values);
             if ($this->db->sql_query->rowCount() > 0) {
 
@@ -91,6 +92,7 @@ class Signup
                 $this->message = "Registration Successfull";
                 $this->sessionData = array('SessionID' => session_id(), 'userId' => $this->values[0], 'username' => $this->values[2]);
                 $_SESSION['authCredentials'] = $this->sessionData;
+
             } else {
                 $this->data = false;
                 $this->message = "Error occured";
