@@ -41,7 +41,7 @@ class authCred
 
         $this->s_id = session_id();
 
-        if (isset($_SESSION['authCredentials']) && !empty($this->s_id) && $this->s_id == $session_id) {
+        if (isset($_SESSION['authCredentials']) || !empty($this->s_id) || $this->s_id == $session_id) {
             $this->data = true;
             $this->message = "Auth data is retrieved";
             $this->sessionData = $_SESSION['authCredentials'];
