@@ -1,8 +1,22 @@
+## Table of contents
+
+- [General info](#general-info)
+- [Technologies](#technologies)
+- [Setup](#setup)
+
+## General info
+
 <b>
 
 This repo consists of backend code for resume maker mobile applicaton.
 
 </b>
+
+## Technologies
+
+Project is created with:
+
+- php
 
 <b>
 For login
