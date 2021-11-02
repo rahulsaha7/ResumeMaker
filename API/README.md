@@ -7,6 +7,7 @@
 - [Registration](#Registration)
 - [Forgot-Password](#Forgot-Password)
 - [Login-Credentials](#Login-Credentials)
+- [Logout](#Logout)
 
 ## General info
 
@@ -30,25 +31,21 @@ Project is created with:
 
 ## Login
 
-For login
-
 ```
-Endpoint : baseurl/login
+    Endpoint : baseurl/login
 
-        OR
+            OR
 
-Endpoint : baseurl/index.php/login
+    Endpoint : baseurl/index.php/login
 
 ```
 
 ```
-    ## Parameters :
+    Parameters :
 
-            `email`
-            `password`
 
-    Please be sure that the names of [Parameters](parameters) should be same as above
-
+          $  email
+          $  password
 
 
     Expected output format :
@@ -79,9 +76,9 @@ Endpoint : baseurl/index.php/login
 
 ```
 
-<b>
-For registration
-</b>
+Please be sure that the names of `Parameters` should be same as above
+
+## Registration
 
 ```
     Endpoint : baseurl/signUp
@@ -92,7 +89,13 @@ For registration
 ```
 
 ```
-    Header :
+    Parameters :
+
+        $  username
+        $  email
+        $  phone
+        $  password
+
 
     Expected output format :
 
@@ -120,26 +123,31 @@ For registration
                         "message": "Username already exist",
                         "SessionData": null
                         }
+```
 
-<b>For logout</b>
+Please be sure that the names of `Parameters` should be same as above
 
-            Endpoint : baseurl/Logout
+## Logout
 
-                        Or
+```
 
-            Endpoint : baseurl/index.php/Logout
+    Endpoint : baseurl/Logout
 
+          Or
 
-            Header :
+    Endpoint : baseurl/index.php/Logout
 
+```
+
+```
 
             For sucessfull operation
 
-            {
-                "status": true,
-                "data": true,
-                "message": "Logout successfull"
-            }
+                {
+                    "status": true,
+                    "data": true,
+                    "message": "Logout successfull"
+                }
 
 
             For unsucessfull operation
@@ -150,18 +158,24 @@ For registration
                     "message": "Session is not set"
                 }
 
-<b>
-    For Session Data
-</b>
+```
 
-            Endpoint : baseurl/auth-cred
+## Login-Credentials
 
-                    Or
+```
 
-            Endpoint : baseurl/index.php/auth-cred
+    Endpoint : baseurl/auth-cred
 
+            Or
 
-            Header :
+    Endpoint : baseurl/index.php/auth-cred
+
+```
+
+```
+            Parameters :
+
+                $ session_id
 
 
              For sucessfull operation
@@ -187,4 +201,7 @@ For registration
                             "SessionData": null
 
                         }
+
 ```
+
+Please be sure that the names of `Parameters` should be same as above
