@@ -3,6 +3,10 @@
 - [General info](#general-info)
 - [Technologies](#technologies)
 - [Setup](#setup)
+- [Login](#Login)
+- [Registration](#Registration)
+- [Forgot-Password](#Forgot-Password)
+- [Login-Credentials](#Login-Credentials)
 
 ## General info
 
@@ -24,52 +28,67 @@ Project is created with:
 - run the index.php file in local machine using local server
 - change the db config file according to your database configuration
 
-<b>
-For login
-</b>
+## Login
 
+For login
+
+```
 Endpoint : baseurl/login
 Or
 Endpoint : baseurl/index.php/login
+```
 
-    Header :
+```
+    Patameters :
+
+            `email`
+            `password`
+
+    Please be sure that the names of `parameters` should be same as above
+
+
 
     Expected output format :
 
-            For successfull operation
+        For successfull operation
 
 
-        {
+            {
 
-            "status": true,
-            "data": true,
-            "message": "Login Successfull",
-            "SessionData": {
-            "userId": "1633934222",
-            "username": "forrahul7@gmail.com"
-             }
-        }
+                "status": true,
+                "data": true,
+                "message": "Login Successfull",
+                "SessionData": {
+                "userId": "1633934222",
+                "username": "forrahul7@gmail.com"
+                }
+            }
 
-            For unsucessfull operation
+        For unsucessfull operation
 
-        {
-            "status": true,
-            "data": false,
-            "message": "username doesn't exixst",
-            "SessionData": null
+            {
+                "status": true,
+                "data": false,
+                "message": "username doesn't exixst",
+                "SessionData": null
 
-        }
+            }
+
+```
 
 <b>
 For registration
 </b>
 
+```
     Endpoint : baseurl/signUp
 
             Or
 
     Endpoint : baseurl/index.php/signUp
+```
 
+```
     Header :
 
     Expected output format :
@@ -97,8 +116,7 @@ For registration
                         "data": false,
                         "message": "Username already exist",
                         "SessionData": null
-
-}
+                        }
 
 <b>For logout</b>
 
@@ -166,3 +184,4 @@ For registration
                             "SessionData": null
 
                         }
+```
