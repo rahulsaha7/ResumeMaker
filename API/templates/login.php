@@ -52,7 +52,7 @@ class login
     private function Login($email, $password)
     {
         $this->values = array($email);
-        $this->sql = "SELECT id,email,password from auth where email = ?";
+        $this->sql = "SELECT userID,email,password from auth where email = ?";
         $this->db = new database();
         $this->db->query_value($this->sql, $this->values);
 
@@ -62,7 +62,7 @@ class login
             if (password_verify($password, $this->result[0]['password'])) {
                 $this->data = true;
                 $this->message = "Login Successfull";
-                $this->sessionData = array('SessionId' => session_id(), 'userId' => $this->result[0]['id'], 'username' => $this->result[0]['email']);
+                $this->sessionData = array('SessionId' => session_id(), 'userId' => $this->result[0]['userID'], 'username' => $this->result[0]['email']);
                 $_SESSION['authCredentials'] = $this->sessionData;
 
             } else {
