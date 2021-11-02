@@ -44,7 +44,7 @@ class Forgot
     private function ResultReturn()
     {
         $this->result = array(
-            "status" => $_POST,
+            "status" => $this->status,
             "data" => $this->data,
             "message" => $this->message
         );
