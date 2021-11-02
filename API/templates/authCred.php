@@ -9,8 +9,7 @@ class authCred
     private $data;
     private $message;
     private $request;
-    private $db;
-    private $sql;
+    private $s_id;
     private $values;
     private $result;
     private $sessionData = null;
@@ -20,10 +19,10 @@ class authCred
         $this->request = $_SERVER['REQUEST_METHOD'];
         $this->request == 'GET' ? extract($_GET) : extract($_POST);
 
-        // $email  = $this->cleanData($email);
+        $session_id = $this->cleanData($session_id);
         // $this->Login($email,$password);
 
-        $this->showCredData();
+        $this->showCredData($session_id);
 
     }
 
@@ -35,18 +34,20 @@ class authCred
         return $data;
     }
 
-    public function showCredData()
+    public function showCredData($session_id)
     {
 
         $this->status = http_response_code();
 
-        if (isset($_SESSION['authCredentials'])) {
+        $this->s_id = session_id();
+
+        if (isset($_SESSION['authCredentials']) && !empty($this->s_id) && $this->s_id == $session_id) {
             $this->data = true;
             $this->message = "Auth data is retrieved";
             $this->sessionData = $_SESSION['authCredentials'];
         } else {
             $this->data = false;
-            $this->message = "Session is not set";
+            $this->message = "Session is not set or expired";
         }
 
         $this->result = array(
