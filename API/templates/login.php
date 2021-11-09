@@ -3,7 +3,7 @@
 class login
 {
     public $status;
-    private $data;
+    private $login;
     private $message;
     private $request;
     private $db;
@@ -26,7 +26,7 @@ class login
 
         if (!isset($password) || !isset($email) || empty($password) || empty($email)) {
 
-            $this->data = false;
+            $this->login = false;
             if (!isset($password) || empty($password)) {
 
                 $this->message = "password field should not be empty";
@@ -64,18 +64,18 @@ class login
 
             $this->result = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
             if (password_verify($password, $this->result[0]['password'])) {
-                $this->data = true;
+                $this->login = true;
                 $this->message = "Login Successfull";
                 $this->sessionData = array('SessionId' => session_id(), 'userId' => $this->result[0]['userID'], 'username' => $this->result[0]['email']);
                 $_SESSION['authCredentials'] = $this->sessionData;
 
             } else {
-                $this->data = false;
+                $this->login = false;
                 $this->message = "Password Missmatched";
             }
 
         } else {
-            $this->data = false;
+            $this->login = false;
             $this->message = "username doesn't exixst";
         }
 
@@ -90,7 +90,7 @@ class login
 
         $this->result = array(
             "status" => $this->status,
-            "data" => $this->data,
+            "data" => $this->login,
             "message" => $this->message,
             "SessionData" => $this->sessionData,
         );
