@@ -14,9 +14,9 @@ class database{
         try{
 
             echo DB_PASS;
-            // $this->conn = new PDO("mysql:host=localhost;dbname=IMDB",'root','Rahul@7242');
-            $this->conn = new PDO("mysql:host =".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS); 
-            // $this->conn = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_UNAME,DB_PASS);
+             $this->conn = new PDO("mysql:host=remotemysql.com;dbname=0ERaAydX2j",'0ERaAydX2j','CkPmhRmMuU');
+            //$this->conn = new PDO("mysql:host =".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASS); 
+            
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         }catch(PDOException $e){

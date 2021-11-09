@@ -108,3 +108,5 @@ class Forgot
 
 
 $newforgot = new Forgot();
+
+?>

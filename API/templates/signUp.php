@@ -120,3 +120,5 @@ class Signup
 };
 
 $newReg = new Signup();
+
+?>

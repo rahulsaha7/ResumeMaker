@@ -62,3 +62,5 @@ class authCred
 };
 
 $login = new authCred();
+
+?>

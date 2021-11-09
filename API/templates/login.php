@@ -100,3 +100,5 @@ class login
 };
 
 $login = new login();
+
+?>

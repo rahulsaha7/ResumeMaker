@@ -18,7 +18,6 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
-        // print_r($this->url);
 
         $this->route();
     }
@@ -70,3 +69,5 @@ class index
 };
 
 $index = new index();
+
+?>
