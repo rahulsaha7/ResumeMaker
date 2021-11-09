@@ -24,7 +24,7 @@ class index
 
     public function route()
     {
-        switch ($this->url[6]) {
+        switch ($this->url[4]) {
             case 'login':
                 
                 
