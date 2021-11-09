@@ -27,8 +27,9 @@ class index
     {
         switch ($this->url[6]) {
             case 'login':
-                echo "data";
-                require_once __DIR__ . '/templates/login.php';
+                
+                
+                require_once __DIR__. '/templates/login.php';
 
                 break;
 
