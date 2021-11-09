@@ -13,18 +13,28 @@ class index
 {
 
     private $url;
+    private $SwitchURL;
+    private $env;
     public $errorResponse;
 
     public function __construct()
     {
         $this->url = baseURL();
+        $this->env = 'livehost';
+        if($this->env == 'development'){
+            $this->SwitchURL = $this->url[6];
+        }else{
+            $this->SwitchURL = $this->url[4];
+        }
 
         $this->route();
     }
 
+
+
     public function route()
     {
-        switch ($this->url[4]) {
+        switch ($this->SwitchURL) {
             case 'login':
                 
                 
