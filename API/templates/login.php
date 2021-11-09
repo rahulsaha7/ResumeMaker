@@ -90,7 +90,7 @@ class login
 
         $this->result = array(
             "status" => $this->status,
-            "data" => $this->login,
+            "login" => $this->login,
             "message" => $this->message,
             "SessionData" => $this->sessionData,
         );
