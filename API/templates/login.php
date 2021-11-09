@@ -22,7 +22,7 @@ class login
 
         //This line of code checck if any empty data is send by client
 
-        
+        print_r ($_POST);
 
         if (!isset($password) || !isset($email) || empty($password) || empty($email)) {
 
