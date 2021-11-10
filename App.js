@@ -4,6 +4,7 @@ import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import  {name as appName } from './app.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from "@react-native-community/netinfo";
 
 import OnboardingScreen from './component/OnboardingScreen';
 import SignIn from './component/SignIn';
@@ -36,13 +37,21 @@ export default class App extends React.Component{
     this.state = {
        firstTime: false,
        isLoggedIn: false,
+       isConnected:false,
     }
   }
   
 
   componentDidMount(){
     this.getData();
+    this.updateConnection();
   }
+
+  updateConnection =()=> {NetInfo.addEventListener(state => {
+    this.setState({
+      isConnected:state.isConnected
+    })
+  });}
 
   getData = async () => {
     console.log('test')
@@ -71,6 +80,11 @@ export default class App extends React.Component{
   onClickStart = ()=> {
     this.setState({firstTime:false});
   }
+
+  changeState = (key,value) =>{
+    this.setState({[key]:value});
+  }
+
   render(){
     return (
       <PaperProvider theme={theme}>
@@ -78,7 +92,7 @@ export default class App extends React.Component{
           <OnboardingScreen onClickStart={this.onClickStart}/>
           :
           !this.state.isLoggedIn?
-            <Account/>
+            <Account isConnected={this.state.isConnected} changeState={this.changeState}/>
             :
             <Dashboard/>
         }
