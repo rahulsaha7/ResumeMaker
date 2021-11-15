@@ -47,14 +47,29 @@ export default class App extends React.Component{
     this.updateConnection();
   }
 
-  updateConnection =()=> {NetInfo.addEventListener(state => {
-    this.setState({
-      isConnected:state.isConnected
-    })
-  });}
+
+
+
+
+
+  updateConnection =()=> {
+    NetInfo.addEventListener(state => {
+      this.setState({
+        isConnected:state.isConnected
+      })
+    });
+}
+
+
+
+
+/**
+ * to get data from localstorage
+ * @param {*} key
+ */
 
   getData = async () => {
-    console.log('test')
+    console.log('test');
     try {
       const value = await AsyncStorage.getItem('firstTime');
       if(value !== null) {
@@ -70,6 +85,16 @@ export default class App extends React.Component{
     }
   }
 
+
+
+
+  /**
+   * to store data in localstorage
+   * 
+   * @param {*} key 
+   * @param {*} value 
+   */
+
   storeData = async (key,value) => {
     try {
       await AsyncStorage.setItem(key, value)
@@ -77,13 +102,22 @@ export default class App extends React.Component{
         Alert.alert("Error","Something went wrong in the onboarding screen");
     }
   }
+
+
+
   onClickStart = ()=> {
     this.setState({firstTime:false});
   }
 
+
+
+
   changeState = (key,value) =>{
     this.setState({[key]:value});
   }
+
+
+
 
   render(){
     return (

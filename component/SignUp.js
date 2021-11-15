@@ -18,6 +18,7 @@ class SignUp extends ValidationComponent {
         super(props)
     
         this.state = {
+             name:'',
              email:'',
              phone:'',
              password:'',
@@ -27,6 +28,11 @@ class SignUp extends ValidationComponent {
              modalTitle:'',
              modalMessage:'',
              closeOnTouchOutside:false,
+             showConfirmButton:false,
+             confirmText:'',
+             onConfirmPressed:()=>this.hideAlert(),
+
+             nameError: false,
              emailError:false,
              phoneError:false,
              passwordError:false,
@@ -34,11 +40,22 @@ class SignUp extends ValidationComponent {
         }
     }
     
+    hideAlert = () =>{
+        this.setState({showAlert:false});
+    }
     _onInputChange = (field,value)=>{
         this.setState({[field]:value},()=>{
             //console.log(field);
             switch(field){
 
+                case 'name':
+                        this.validate({
+                            name:{required: true},
+                        });
+                        this.setState({
+                            nameError:this.isFieldInError('name'),
+                        });
+                    break;
                 case 'email':
                         this.validate({
                             email:{email:true,required: true},
@@ -67,7 +84,7 @@ class SignUp extends ValidationComponent {
 
                 case 'confirmPassword':
                     this.validate({
-                        confirmPassword:{equalPassword: this.state.password},
+                        confirmPassword:{equalPassword: this.state.password,required:true},
                     });
                     this.setState({
                         confirmPasswordError:this.isFieldInError('confirmPassword'),
@@ -79,6 +96,7 @@ class SignUp extends ValidationComponent {
     _onSubmit = async() => {
 
         this.validate({
+            name:{required:true},
             email:{email:true,required: true},
             phone:{required:true},
             password:{minlength:5, maxlength:20, required: true},
@@ -106,7 +124,7 @@ class SignUp extends ValidationComponent {
             if(this.props.isConnected){
                 try{
                     const params={
-                            username:this.state.email,
+                            name:this.state.name,
                             email: this.state.email,
                             phone: this.state.phone,
                             password: this.state.password
@@ -116,7 +134,20 @@ class SignUp extends ValidationComponent {
                     console.log(response);
                     if(response.status === 200){
                         if(response.data.data === true){
-                            console.log('reg success');
+                            this.setState({
+                                showAlert: true,
+                                showModalProgress:false,
+                                modalTitle:"Success",
+                                modalMessage: response.data.message,
+                                closeOnTouchOutside: false,
+                                showConfirmButton:true,
+                                confirmText:'Goto Dashboard',
+                                onConfirmPressed:()=>{
+                                    this.hideAlert();
+                                    this.props.changeState('isLoggedIn',true);
+                                }
+                            });
+                            //this.props.changeState('isLoggedIn',true);
                             //this.props.changeState('isLoggedIn',true);
                         }
                         else
@@ -166,8 +197,9 @@ class SignUp extends ValidationComponent {
     }
 
     render() {
+        console.log(this.props.rules);
         const {colors} = this.props.theme;
-        const {email,phone,password,confirmPassword,showAlert,showModalProgress,modalTitle,modalMessage,closeOnTouchOutside,emailError,phoneError,passwordError, confirmPasswordError } = this.state;
+        const {name,email,phone,password,confirmPassword,showAlert,showModalProgress,confirmText,showConfirmButton,onConfirmPressed,modalTitle,modalMessage,closeOnTouchOutside,nameError,emailError,phoneError,passwordError, confirmPasswordError } = this.state;
         console.log(this.state);
         return (
             <React.Fragment>
@@ -184,11 +216,35 @@ class SignUp extends ValidationComponent {
                         <Text style={styles.subHeadingText}> Create an account  to store  your works </Text>
                     </View>
                     <View style={styles.inputContainer}>
-
                         <TextInput
                             style={[styles.inputStyle]}
                             underlineColor={"transparent"}
-                            label="Email"
+                            label="Enter your full name"
+                            value={name}
+                            onChangeText = {(value)=>this._onInputChange('name',value)}
+                            left={
+                                <TextInput.Icon
+                                name = {()=><MaterialIcons name="person" size={20} color={colors.icon}/>}
+                                ></TextInput.Icon>
+                            }
+                            right={
+                                nameError?
+                                    <TextInput.Icon
+                                    name = {()=>{
+                                        return <Pressable onPress={()=>this._showInputError('name')}>
+
+                                                    <MaterialIcons name="info" size={20} color='red'/>
+                                                    </Pressable>}
+                                        }
+                                    ></TextInput.Icon>
+                                :
+                                null
+                            }
+                        />
+                        <TextInput
+                            style={[styles.inputStyle]}
+                            underlineColor={"transparent"}
+                            label="Enter your email"
                             value={email}
                             onChangeText = {(value)=>this._onInputChange('email',value)}
                             left={
@@ -213,7 +269,7 @@ class SignUp extends ValidationComponent {
                         <TextInput
                             style={[styles.inputStyle]}
                             underlineColor={"transparent"}
-                            label="Phone"
+                            label="Enter your phone"
                             value={phone}
                             onChangeText = {(value)=>this._onInputChange('phone',value)}
                             left={
@@ -314,19 +370,21 @@ class SignUp extends ValidationComponent {
                         closeOnTouchOutside={closeOnTouchOutside}
                         closeOnHardwareBackPress={false}
                         showCancelButton={false}
-                        showConfirmButton={false}
+                        showConfirmButton={showConfirmButton}
                         cancelText="No, cancel"
                         confirmText="Yes, delete it"
-                        confirmButtonColor="#DD6B55"
+                        confirmButtonColor="#92B2FD"
+                        confirmText={confirmText}
                         onDismiss = {()=>{
                             this.setState({showAlert:false})
                         }}
                         onCancelPressed={() => {
                             this.hideAlert();
                         }}
-                        onConfirmPressed={() => {
-                            this.hideAlert();
-                        }}
+                        onConfirmPressed={onConfirmPressed}
+                        actionContainerStyle={{}}
+                        confirmButtonStyle={styles.confirmButtonContainer}
+                        confirmButtonTextStyle={styles.buttonText}
                         />
             </React.Fragment>
         )
@@ -381,7 +439,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer:{
         borderRadius:40,
-        padding:9,
+        padding: 9,
         marginLeft: 40,
         marginRight: 40,
     },
@@ -396,6 +454,12 @@ const styles = StyleSheet.create({
     forgotPassword:{
         fontSize: 16,
         marginVertical: 5,
+    },
+    confirmButtonContainer:{
+        borderRadius:40,
+        padding: 10,
+        paddingLeft: 40,
+        paddingRight: 40,
     }
 });
 
