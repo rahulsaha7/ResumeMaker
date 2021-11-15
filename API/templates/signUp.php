@@ -53,7 +53,7 @@ class Signup
             
             $this->date = date("Y-m-d", strtotime("now"));
             $password = password_hash($password, PASSWORD_BCRYPT);
-            $this->values = array($this->id,$email, $phone, $password, $this->date);
+            $this->values = array($this->id,$name,$email, $phone, $password, $this->date);
             $this->register();
         }
 
@@ -70,7 +70,7 @@ class Signup
     private function register()
     {
 
-        $email = $this->values[1];
+        $email = $this->values[2];
         
         $this->sql = "SELECT userID from auth where email = '$email'";
 
@@ -79,10 +79,10 @@ class Signup
         if ($this->db->sql_query->rowCount() > 0) {
             $this->status = true;
             $this->data = false;
-            $this->message = "Username already exist";
+            $this->message = "Email is  already in use";
         } else {
 
-            $this->sql = "INSERT into auth (userID,email,phone,password,joinDate) values(?,?,?,?,?,?)";
+            $this->sql = "INSERT into auth (userID,name,email,phone,password,joinDate) values(?,?,?,?,?,?)";
             $this->db->query_value($this->sql, $this->values);
             if ($this->db->sql_query->rowCount() > 0) {
 

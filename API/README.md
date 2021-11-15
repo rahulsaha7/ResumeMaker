@@ -90,7 +90,7 @@ Please be sure that the names of `Parameters` should be same as above
 
 ```
     Parameters :
-
+        $  name
         $  email
         $  phone
         $  password
