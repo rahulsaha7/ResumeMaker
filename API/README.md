@@ -91,7 +91,6 @@ Please be sure that the names of `Parameters` should be same as above
 ```
     Parameters :
 
-        $  username
         $  email
         $  phone
         $  password
