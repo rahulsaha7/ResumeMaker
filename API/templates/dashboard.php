@@ -80,8 +80,7 @@ class Forgot
                     $this->sql = "SELECT id,name,email from PersonalDetails where resumeNo = $resumeNo ";
                     $this->db->query($this->sql);
                     if($this->db->sql_query->rowCount() > 0){
-                        $this->data.push($this->data,$this->db->sql_query->fetchAll(PDO::FETCH_ASSOC));
-                        
+                        $this->data.push($this->data,$this->db->sql_query->fetchAll(PDO::FETCH_ASSOC)); 
                     }                    
                     
 
