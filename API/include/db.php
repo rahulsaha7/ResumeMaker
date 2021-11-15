@@ -30,7 +30,7 @@ class database{
         $this->sql_query = $this->conn->prepare($sql);
         $this->sql_query->execute();
         }catch(PDOException $e){
-            echo "oops ! looks like something went wrong";
+            echo "oops ! looks like something went wrong".$e;
         }
     }
 

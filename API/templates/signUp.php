@@ -53,7 +53,7 @@ class Signup
             
             $this->date = date("Y-m-d", strtotime("now"));
             $password = password_hash($password, PASSWORD_BCRYPT);
-            $this->values = array($this->id, $email, $phone, $password, $this->date);
+            $this->values = array($this->id,$email, $phone, $password, $this->date);
             $this->register();
         }
 
@@ -70,7 +70,8 @@ class Signup
     private function register()
     {
 
-        $email = $this->values[2];
+        $email = $this->values[1];
+        
         $this->sql = "SELECT userID from auth where email = '$email'";
 
         $this->db = new database();

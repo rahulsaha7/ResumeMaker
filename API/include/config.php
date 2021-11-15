@@ -30,7 +30,7 @@ These are the username and password to log in to your database and phpMyAdmin
 
 */
 
-    $env2 = 'liveHost';
+    $env2 = 'livehost';
 
     if($env2 == 'development'){
 
