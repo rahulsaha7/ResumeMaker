@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/include/init.php';
+
+
+
+
+
+
+
+
 session_start();
-error_reporting(true);
-error_reporting(-1);
+error_reporting(0);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
@@ -21,9 +30,9 @@ class index
     {
         $this->url = baseURL();
         $this->env = 'livehost';
-        if($this->env == 'development'){
+        if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
-        }else{
+        } else {
             $this->SwitchURL = $this->url[4];
         }
 
@@ -36,9 +45,9 @@ class index
     {
         switch ($this->SwitchURL) {
             case 'login':
-                
-                
-                require_once __DIR__. '/templates/login.php';
+
+
+                require_once __DIR__ . '/templates/login.php';
 
                 break;
 
@@ -60,11 +69,11 @@ class index
                 require_once __DIR__ . '/templates/forgot.php';
                 break;
 
-            case 'dashboard-data':
+            case 'dashboard':
 
-                    require_once __DIR__.'/templates/dashboard.php';
-                    break;
-                    
+                require_once __DIR__ . '/templates/dashboard.php';
+                break;
+
             default:
                 $result = array(
                     'Status' => http_response_code(),
@@ -75,9 +84,6 @@ class index
                 break;
         }
     }
-
 };
 
 $index = new index();
-
-?>

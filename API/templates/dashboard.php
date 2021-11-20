@@ -1,91 +1,92 @@
 <?php
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class Forgot
 {
     public $status;
-    private $data;
+    private $success;
     private $message;
-    private $s_id;
     private $request;
     private $db;
     private $sql;
-    private $mailer;
+
     private $result;
     private $id;
-    private $sessionData;
+    private $Data = [];
 
     public function __construct()
     {
-        $this->data = array();
-        var_dump($this->data);
+
         $this->status = http_response_code();
-        $this->s_id = session_id();
         $this->request = $_SERVER['REQUEST_METHOD'];
 
         $this->request == 'GET' ? extract($_GET) : extract($_POST);
 
         //This line of code checck if any empty data is send by client
+        try {
 
-        if (!isset($_SESSION['authCredentials']) || empty($this->s_id) || $this->s_id == $session_id) {
+            $bearerToken = $_SERVER['HTTP_AUTHORIZATION'];
+            if ($bearerToken) {
 
-            $this->data = array();
-            $this->message = 'session is empty or expired';
+
+
+                $decode = JWT::decode($bearerToken, new Key('bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew', 'HS256'));
+                $this->id = $decode->userId;
+                $this->showDashData();
+            } else {
+                $this->success = false;
+                $this->message = "Token is missing";
+            }
+        } catch (Exception $e) {
+
+            $this->message =  $e->getMessage();
+        } finally {
             $this->ResultReturn();
-
-        } else {
-
-            $this->showDashData();
-
         }
-
     }
 
 
-    private function showDashData() {
+    private function showDashData()
+    {
 
         $this->db = new Database();
-        $this->sessionData = $_SESSION['authCredentials'];
-        $this->id = $this->sessionData['userId'];
-       // echo $this->id;
+
+
         $this->sql = "SELECT resumeNo from  resume where userId = $this->id";
         $this->db->query($this->sql);
         if ($this->db->sql_query->rowCount() > 0) {
             $this->result = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
-           
-            $this->getPersonalData();
 
+            $this->getPersonalData();
+            $this->success = true;
             $this->message = "data fetched";
         } else {
 
-            $this->data = array();
-            $this->message = "userId not exist";
-
+            $this->success = false;
+            $this->message = "This user haven't create a resume";
         }
-        $this->ResultReturn();
         $this->db->close_connection();
-
     }
 
-    private function getPersonalData(){
+    private function getPersonalData()
+    {
 
-            // while($this->result){
-            //     echo "resume no = ".$this->result['resumeNo'];
-            // }
+        // while ($this->result) {
+        //     echo "resume no = " . $this->result['resumeNo'];
+        // }
 
-            
-            for ($i=0; $i < count($this->result); $i++) { 
-               
-                    $resumeNo = $this->result[$i]['resumeNo'];
-                    $this->sql = "SELECT id,name,email from PersonalDetails where resumeNo = $resumeNo ";
-                    $this->db->query($this->sql);
-                    if($this->db->sql_query->rowCount() > 0){
-                        $this->data.push($this->data,$this->db->sql_query->fetchAll(PDO::FETCH_ASSOC)); 
-                    }                    
-                    
+        for ($i = 0; $i < count($this->result); $i++) {
 
+            $resumeNo = $this->result[$i]['resumeNo'];
+            $this->sql = "SELECT id,name,email,image from PersonalDetails where resumeNo = $resumeNo ";
+            $this->db->query($this->sql);
+            if ($this->db->sql_query->rowCount() > 0) {
+                $rsData =  $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+                array_push($this->Data, $rsData);
             }
-
+        }
     }
 
 
@@ -95,17 +96,13 @@ class Forgot
     {
         $this->result = array(
             "status" => $this->status,
-            "data" => $this->data,
-            "message" => $this->message
+            "success" => $this->success,
+            "message" => $this->message,
+            "data" => $this->Data
         );
         echo json_encode($this->result);
     }
-
-
-
 };
 
 
 $newforgot = new Forgot();
-
-?>  

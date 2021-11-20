@@ -1,5 +1,10 @@
 <?php
 
+
+
+use Firebase\JWT\JWT;
+
+
 class login
 {
     public $status;
@@ -10,19 +15,23 @@ class login
     private $sql;
     private $values;
     private $result;
-    private $sessionData = null;
+    private $payload;
+    private $secretCode;
+    private $jwt;
+    private $issuedAt;
+    private $expire;
 
     public function __construct()
     {
 
-       
+
         $this->status = http_response_code();
         $this->request = $_SERVER['REQUEST_METHOD'];
         $this->request == 'GET' ? extract($_GET) : extract($_POST);
 
         //This line of code checck if any empty data is send by client
 
-        
+
 
         if (!isset($password) || !isset($email) || empty($password) || empty($email)) {
 
@@ -36,13 +45,10 @@ class login
             }
 
             $this->Returnresult();
-
         } else {
             $email = $this->cleanData($email);
             $this->Login($email, $password);
-
         }
-
     }
 
     public function cleanData($data)
@@ -66,14 +72,23 @@ class login
             if (password_verify($password, $this->result[0]['password'])) {
                 $this->login = true;
                 $this->message = "Login Successfull";
-                $this->sessionData = array('SessionId' => session_id(), 'userId' => $this->result[0]['userID'], 'username' => $this->result[0]['email']);
-                $_SESSION['authCredentials'] = $this->sessionData;
 
+                // $_SESSION['authCredentials'] = $this->sessionData;
+                $this->secretCode = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew";
+                $this->issuedAt   = new DateTimeImmutable();
+                $this->expire     = $this->issuedAt->modify('+6 minutes')->getTimestamp();
+                $this->payload = array(
+                    'iat'  => $this->issuedAt->getTimestamp(),         // Issued at: time when the token was generated
+                    'nbf'  => $this->issuedAt->getTimestamp(),
+                    'exp'  => $this->expire,
+                    'userId' => $this->result[0]['userID'],
+                    'username' => $this->result[0]['email']
+                );
+                $this->jwt = JWT::encode($this->payload, $this->secretCode, 'HS256');
             } else {
                 $this->login = false;
                 $this->message = "Password Missmatched";
             }
-
         } else {
             $this->login = false;
             $this->message = "username doesn't exixst";
@@ -82,7 +97,6 @@ class login
         $this->Returnresult();
 
         $this->db->close_connection();
-
     }
 
     private function Returnresult()
@@ -92,13 +106,10 @@ class login
             "status" => $this->status,
             "login" => $this->login,
             "message" => $this->message,
-            "SessionData" => $this->sessionData,
+            "token" => $this->jwt,
         );
         echo json_encode($this->result);
     }
-
 };
 
 $login = new login();
-
-?>

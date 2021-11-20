@@ -1,6 +1,7 @@
 <?php
 
-//This file is in a making a progress
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class authCred
 {
@@ -12,7 +13,8 @@ class authCred
     private $s_id;
     private $values;
     private $result;
-    private $sessionData = null;
+    private $jwt;
+    private $secretCode;
 
     public function __construct()
     {
@@ -62,5 +64,3 @@ class authCred
 };
 
 $login = new authCred();
-
-?>

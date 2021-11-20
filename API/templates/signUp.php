@@ -1,11 +1,6 @@
 <?php
 
-//Modify Everything in basis of class
-// now test it using normal functional way but transfer it class componenet later.
-
-//return json data with accurate formatting and with status code for every type like success or error;
-
-//tomorrow create private empty repo and push this login data to remp with proper call formatting
+use Firebase\JWT\JWT;
 
 class Signup
 {
@@ -17,7 +12,11 @@ class Signup
     private $sql;
     private $values;
     private $result;
-    private $sessionData = null;
+    private $payload;
+    private $secretCode;
+    private $jwt;
+    private $issuedAt;
+    private $expire;
     private $id;
     public $date;
 
@@ -44,19 +43,17 @@ class Signup
                 $this->message = "Looks like some data is empty";
             }
             $this->ResultReturn();
-
         } else {
             $email = $this->cleanData($email);
             $phone = $this->cleanData($phone);
 
             $this->id = strtotime('now');
-            
+
             $this->date = date("Y-m-d", strtotime("now"));
             $password = password_hash($password, PASSWORD_BCRYPT);
-            $this->values = array($this->id,$name,$email, $phone, $password, $this->date);
+            $this->values = array($this->id, $name, $email, $phone, $password, $this->date);
             $this->register();
         }
-
     }
 
     public function cleanData($data)
@@ -71,7 +68,7 @@ class Signup
     {
 
         $email = $this->values[2];
-        
+
         $this->sql = "SELECT userID from auth where email = '$email'";
 
         $this->db = new database();
@@ -88,20 +85,26 @@ class Signup
 
                 $this->data = true;
                 $this->message = "Registration Successfull";
-                $this->sessionData = array('SessionID' => session_id(), 'userId' => $this->values[0], 'username' => $this->values[2]);
-                $_SESSION['authCredentials'] = $this->sessionData;
-
+                $this->secretCode = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew";
+                $this->issuedAt   = new DateTimeImmutable();
+                $this->expire     = $this->issuedAt->modify('+1 minutes')->getTimestamp();
+                $this->payload = array(
+                    'iat'  => $this->issuedAt->getTimestamp(),         // Issued at: time when the token was generated
+                    'nbf'  => $this->issuedAt->getTimestamp(),
+                    'exp'  => $this->expire,
+                    'userId' => $this->values[0],
+                    'username' => $this->values[2]
+                );
+                $this->jwt = JWT::encode($this->payload, $this->secretCode, 'HS256');
             } else {
                 $this->data = false;
                 $this->message = "Error occured";
             }
-
         }
 
         $this->ResultReturn();
 
         $this->db->close_connection();
-
     }
 
     private function ResultReturn()
@@ -110,13 +113,10 @@ class Signup
             "status" => $this->status,
             "data" => $this->data,
             "message" => $this->message,
-            "SessionData" => $this->sessionData,
+            "token" => $this->jwt,
         );
         echo json_encode($this->result);
     }
-
 };
 
 $newReg = new Signup();
-
-?>
