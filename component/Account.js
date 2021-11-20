@@ -36,13 +36,9 @@ export class Account extends Component {
     render() {
         return (
                 this.state.showSignInPage?
-                <SignIn openSignUpPage={this.openSignUpPage} isConnected={this.props.isConnected} changeState={this.props.changeState}/>
+                <SignIn openSignUpPage={this.openSignUpPage}/>
                 :
-                <SignUp
-                    openSignInPage={this.openSignInPage}
-                    isConnected={this.props.isConnected} // containing if network is connected or not
-                    changeState={this.props.changeState} // function to change login state
-                    />
+                <SignUp openSignInPage={this.openSignInPage}/>
         )
     }
 }

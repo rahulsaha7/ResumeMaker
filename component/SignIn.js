@@ -10,6 +10,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import axios from 'axios';
 import qs from 'qs'
 
+import { ERContext } from '../ERContext';
 
 class SignIn extends ValidationComponent {
     constructor(props) {
@@ -84,7 +85,7 @@ class SignIn extends ValidationComponent {
                 modalMessage:"Logging..",
                 closeOnTouchOutside: false,
             });
-            if(this.props.isConnected){
+            if(this.context.isConnected){
                 try{
                     const params={
                             email: this.state.username,
@@ -95,7 +96,7 @@ class SignIn extends ValidationComponent {
                     console.log(response);
                     if(response.status === 200){
                         if(response.data.login === true){
-                            this.props.changeState('isLoggedIn',true);
+                            this.context.changeState('isLoggedIn',true);
                         }
                         else
                             this.setState({
@@ -146,6 +147,8 @@ class SignIn extends ValidationComponent {
       
 
     render() {
+        console.log('test context');
+        console.log(this.context.isConnected);
         const {colors} = this.props.theme;
         const {showAlert,showModalProgress,modalTitle,modalMessage,closeOnTouchOutside,usernameError,passwordError} = this.state;
         return (
@@ -340,5 +343,6 @@ const styles = StyleSheet.create({
     }
 });
 
+SignIn.contextType = ERContext;
 
 export default withTheme(SignIn)

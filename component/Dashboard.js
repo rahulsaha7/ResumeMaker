@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Pressable, SafeAreaView } from 'react-native'
 import AppBar from './AppBar'
-import { FAB } from 'react-native-paper';
+import { FAB,List } from 'react-native-paper';
+import 'react-native-gesture-handler';
 
 import ResumeCard from './ResumeCard';
+import ProfileDetails from './ProfileDetails';
+
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -15,14 +19,16 @@ export class Dashboard extends Component {
     }
     
     render() {
+       const userNav = createDrawerNavigator();
+
+       let { navigation } = this.props;
         return (
-            <React.Fragment>
-                <AppBar/>
+            <>
                 <FAB
                     style={styles.fab}
                     icon="plus"
                     color="#ffffff"
-                    onPress={() => console.log('Pressed')}
+                    onPress={()=>this.props.navigation.push('Profile')}
                 />
                 
                 {this.state.itemsCount === 0 ?
@@ -38,9 +44,26 @@ export class Dashboard extends Component {
                         <ResumeCard name="Kuntal Sarkar" email="kuntalsarkar00@gmail.com"/>
                         <ResumeCard name="M. Dhivya" email="M.dhivya00@gmail.com"/>
                         <ResumeCard name="Rahul Saha" email="RahulSaha@gmail.com"/>
+
+                        <List.Section title="Accordions">
+                            <List.Accordion
+                                title="Uncontrolled Accordion"
+                                left={props => <List.Icon {...props} icon="folder" />}>
+                                <List.Item title="First item" />
+                                <List.Item title="Second item" />
+                            </List.Accordion>
+
+                            <List.Accordion
+                                title="Controlled Accordion"
+                                left={props => <List.Icon {...props} icon="folder" />}>
+                                <List.Item title="First item" />
+                                <List.Item title="Second item" />
+                            </List.Accordion>
+                        </List.Section>
                     </View>
                 }
-            </React.Fragment>
+                </>
+
         )
     }
 }
@@ -53,6 +76,7 @@ const styles = StyleSheet.create({
       right: 0,
       bottom: 0,
       backgroundColor: '#92B2FD',
+      zIndex: 1
     },
     noResumeContainer:{
         flex: 1,

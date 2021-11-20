@@ -36,7 +36,7 @@ export default class OnboardingScreen extends Component {
                   bottomBarHighlight = {false}
                   DoneButtonComponent={()=>{
                     return <Button style={styles.startButton} mode="contained" onPress={() => {this.hideOnBoardingScreen();this.props.onClickStart()}}>
-                            Let's Start
+                            Done
                           </Button>
                   }}
                   pages={[

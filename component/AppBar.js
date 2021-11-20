@@ -7,7 +7,7 @@ export class AppBar extends Component {
     render() {
         return (
             <React.Fragment>
-                <Appbar.Header style={{marginTop:0}} color="#ffffff">
+                <Appbar.Header style={{marginTop:20}} color="red">
                     <LinearGradient
                         // Background Linear Gradient
                         colors={['rgba(245,148,183,1)', 'rgba(173,127,251,1)','rgba(146,178,253,1)']}
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize: 20,
         fontWeight: 'bold',
-        fontFamily: 'Roboto'
+        fontFamily: 'Roboto',
     }
 });
 

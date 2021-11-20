@@ -10,7 +10,7 @@ import ValidationComponent from 'react-native-form-validator';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import axios from 'axios';
 import qs from 'qs'
-
+import { ERContext } from '../ERContext';
 
 
 class SignUp extends ValidationComponent {
@@ -121,7 +121,7 @@ class SignUp extends ValidationComponent {
                 modalMessage:"Creating Account..",
                 closeOnTouchOutside: false,
             });
-            if(this.props.isConnected){
+            if(this.context.isConnected){
                 try{
                     const params={
                             name:this.state.name,
@@ -144,7 +144,7 @@ class SignUp extends ValidationComponent {
                                 confirmText:'Goto Dashboard',
                                 onConfirmPressed:()=>{
                                     this.hideAlert();
-                                    this.props.changeState('isLoggedIn',true);
+                                    this.context.changeState('isLoggedIn',true);
                                 }
                             });
                             //this.props.changeState('isLoggedIn',true);
@@ -463,5 +463,6 @@ const styles = StyleSheet.create({
     }
 });
 
+SignUp.contextType = ERContext;
 
 export default withTheme(SignUp)
