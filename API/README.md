@@ -8,6 +8,7 @@
 - [Forgot-Password](#Forgot-Password)
 - [Login-Credentials](#Login-Credentials)
 - [Logout](#Logout)
+- [Dashboard](#Dashboard)
 
 ## General info
 
@@ -200,6 +201,80 @@ Please be sure that the names of `Parameters` should be same as above
                             "SessionData": null
 
                         }
+
+```
+
+### Dashboard
+
+```
+    Endpoint : baseurl/dashboard
+
+            Or
+
+    Endpoint : baseurl/index.php/dashboard
+
+
+```
+
+```
+
+
+            Parameters :
+
+                $ AUTHORIZATION[In header]
+
+
+            For sucessfull operation
+
+                {
+                    "status": 200,
+                    "success": true,
+                    "message": "data fetched",
+                    "data": [
+                              [
+                                {
+                                    "id": "1",
+                                    "name": "Rahul Saha",
+                                    "email": "forrahul7@gmail.com",
+                                    "image": "N/A"
+                                }
+                              ],
+                              [
+                                {
+                                    "id": "2",
+                                    "name": "Kuntal Sarkar",
+                                    "email": "kuntalsakar00@gmail.com",
+                                    "image": "N/A"
+                                }
+                              ],
+                              [
+                                {
+                                    "id": "3",
+                                    "name": "Divya.M",
+                                    "email": "divyam00@gmail.com",
+                                    "image": "N/A"
+                                }
+                              ]
+                            ]
+                }
+
+
+            For unsucessfull operation
+
+                {
+                    "status": 200,
+                    "success": null,
+                    "message": "Expired token",
+                    "data": []
+                },
+
+                {
+                    "status": 200,
+                    "success": [],
+                    "message": "This user haven't create a resume",
+                    "data": []
+                }
+
 
 ```
 
