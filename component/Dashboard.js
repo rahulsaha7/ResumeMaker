@@ -44,22 +44,6 @@ export class Dashboard extends Component {
                         <ResumeCard name="Kuntal Sarkar" email="kuntalsarkar00@gmail.com"/>
                         <ResumeCard name="M. Dhivya" email="M.dhivya00@gmail.com"/>
                         <ResumeCard name="Rahul Saha" email="RahulSaha@gmail.com"/>
-
-                        <List.Section title="Accordions">
-                            <List.Accordion
-                                title="Uncontrolled Accordion"
-                                left={props => <List.Icon {...props} icon="folder" />}>
-                                <List.Item title="First item" />
-                                <List.Item title="Second item" />
-                            </List.Accordion>
-
-                            <List.Accordion
-                                title="Controlled Accordion"
-                                left={props => <List.Icon {...props} icon="folder" />}>
-                                <List.Item title="First item" />
-                                <List.Item title="Second item" />
-                            </List.Accordion>
-                        </List.Section>
                     </View>
                 }
                 </>
