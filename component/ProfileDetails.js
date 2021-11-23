@@ -137,7 +137,7 @@ export default class ProfileDetails extends Component {
                                     colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
                                     end={{x:0.9,y:0.9}}
                                     style={[styles.buttonContainer,{marginBottom:20}]}>
-                                    <Button style={styles.button} labelStyle={styles.buttonText} mode="text" color="#ffffff" onPress={this._onSubmit}>
+                                    <Button style={styles.button} labelStyle={styles.buttonText} mode="text" color="#ffffff" onPress={this.props.navigation.push('ChooseTemplate')}>
                                         Add More
                                     </Button>
                             </LinearGradient>
