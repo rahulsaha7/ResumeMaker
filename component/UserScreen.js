@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './Dashboard';
 import ProfileDetails from './ProfileDetails';
 import ChooseTemplate from './ChooseTemplate';
+import Preview from './Preview';
 export default class UserScreen extends Component {
     render() {
         const Stack = createStackNavigator();
@@ -34,6 +35,13 @@ export default class UserScreen extends Component {
                 <Stack.Screen
                     name="ChooseTemplate"
                     component={ChooseTemplate}
+                    options={{
+                        headerShown:false,
+                    }}
+                />
+                <Stack.Screen
+                    name="Preview"
+                    component={Preview}
                     options={{
                         headerShown:false,
                     }}

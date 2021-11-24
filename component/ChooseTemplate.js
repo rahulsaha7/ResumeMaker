@@ -5,6 +5,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { LinearGradient } from 'expo-linear-gradient';
 
 
+import resumeThumb from './../assets/profile.png'
+
+
 export default class ChooseTemplate extends Component {
     constructor(props) {
         super(props)
@@ -39,22 +42,6 @@ export default class ChooseTemplate extends Component {
 
                     <View style={styles.imageContainer}>
                         <Pressable
-                            onPress={()=>this.setState({checkid:4})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===4?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
-
-
-                    <View style={styles.imageContainer}>
-                        <Pressable
                             onPress={()=>this.setState({checkid:2})}
                         >
                             <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
@@ -71,11 +58,11 @@ export default class ChooseTemplate extends Component {
 
                     <View style={styles.imageContainer}>
                         <Pressable
-                            onPress={()=>this.setState({checkid:3})}
+                            onPress={()=>this.setState({checkid:8})}
                         >
                             <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
                         </Pressable>
-                        {checkid===3?
+                        {checkid===8?
                             <View style={styles.checkbox}>
                                 <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
                             </View>
@@ -83,6 +70,7 @@ export default class ChooseTemplate extends Component {
                             null
                         }
                     </View>
+
 
                     <View style={styles.imageContainer}>
                         <Pressable
@@ -101,11 +89,26 @@ export default class ChooseTemplate extends Component {
 
                     <View style={styles.imageContainer}>
                         <Pressable
-                            onPress={()=>this.setState({checkid:3})}
+                            onPress={()=>this.setState({checkid:4})}
                         >
                             <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
                         </Pressable>
-                        {checkid===3?
+                        {checkid===4?
+                            <View style={styles.checkbox}>
+                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
+                            </View>
+                            :
+                            null
+                        }
+                    </View>
+
+                    <View style={styles.imageContainer}>
+                        <Pressable
+                            onPress={()=>this.setState({checkid:5})}
+                        >
+                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
+                        </Pressable>
+                        {checkid===5?
                             <View style={styles.checkbox}>
                                 <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
                             </View>
@@ -123,7 +126,7 @@ export default class ChooseTemplate extends Component {
                         colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
                         end={{x:0.9,y:0.9}}
                         >
-                            <Button style={styles.nextButton} labelStyle={styles.nextButtonText} mode="text" color="#ffffff" onPress={()=>{}}>
+                            <Button style={styles.nextButton} labelStyle={styles.nextButtonText} mode="text" color="#ffffff" onPress={()=>{this.props.navigation.push('Preview',{ResumeId:checkid})}}>
                                 Preview
                             </Button>
                     </LinearGradient>
@@ -152,6 +155,7 @@ const styles = StyleSheet.create({
         padding:5,
     },
     image:{
+        borderRadius: 5,
         width:'100%',
         height:'100%'
     },
@@ -167,6 +171,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#0008',
         marginVertical:5,
         marginHorizontal:16,
+        borderRadius:5,
     },
     nextButton:{
         paddingVertical: 10,

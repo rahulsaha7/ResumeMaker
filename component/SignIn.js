@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image, Alert, Pressable, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 //import {} from 'react-native-paper'
 import { LinearGradient } from 'expo-linear-gradient';
-import { TextInput, Button,HelperText } from 'react-native-paper';
+import { TextInput, Button } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { withTheme } from 'react-native-paper';
 import ValidationComponent from 'react-native-form-validator';

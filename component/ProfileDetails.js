@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, TextInput, StyleSheet, ScrollView, Image } from 'react-native'
-import { FAB,List, Button,HelperText, Switch  } from 'react-native-paper';
+import { FAB,List, Button,HelperText, Switch,IconButton  } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import * as ImagePicker from 'expo-image-picker';
@@ -48,13 +48,15 @@ export default class ProfileDetails extends Component {
                         <View style={{flexDirection:'row', justifyContent:'center',marginTop:10}}>
                             <View>
                                 <Image source={this.state.profilePhoto} style={{height:100,width:100,borderRadius:100}}></Image>
-                                <View style={{position:'absolute',bottom:0,right:0}}>
-                                    <Button
+                                <View style={{position:'absolute',bottom:0,right:-5,backgroundColor:'#CCD0F6',borderRadius:30}}>
+                                    <IconButton
                                         onPress={()=>this.pickImage()}
-                                        style={{padding:5,backgroundColor:'#D8D8D8',borderRadius:20}}
+                                        style={{margin:0}}
+                                        icon="camera"
+                                        color="#fff"
                                     >
-                                    T
-                                    </Button>
+                                    
+                                    </IconButton>
                                 </View>
                             </View>
                         </View>
@@ -137,7 +139,7 @@ export default class ProfileDetails extends Component {
                                     colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
                                     end={{x:0.9,y:0.9}}
                                     style={[styles.buttonContainer,{marginBottom:20}]}>
-                                    <Button style={styles.button} labelStyle={styles.buttonText} mode="text" color="#ffffff" onPress={this.props.navigation.push('ChooseTemplate')}>
+                                    <Button style={styles.button} labelStyle={styles.buttonText} mode="text" color="#ffffff" onPress={()=>{}}>
                                         Add More
                                     </Button>
                             </LinearGradient>
@@ -365,7 +367,7 @@ export default class ProfileDetails extends Component {
                     colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
                     end={{x:0.9,y:0.9}}
                     >
-                        <Button style={styles.nextButton} labelStyle={styles.nextButtonText} mode="text" color="#ffffff" onPress={this._onSubmit}>
+                        <Button style={styles.nextButton} labelStyle={styles.nextButtonText} mode="text" color="#ffffff" onPress={()=>this.props.navigation.push('ChooseTemplate')}>
                             Next
                         </Button>
                 </LinearGradient>

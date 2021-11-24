@@ -21,6 +21,8 @@ import Account from './component/Account';
 import ProfileDetails from './component/ProfileDetails';
 import { ERContext } from './ERContext';
 import UserScreen from './component/UserScreen';
+import DrawerContent from './component/DrawerContent'
+
 
 const theme = {
   ...DefaultTheme,
@@ -138,7 +140,7 @@ export default class App extends React.Component{
 
   render(){
 
-    const Stack = createDrawerNavigator();
+    const Drawer = createDrawerNavigator();
 
     return (
       <ERContext.Provider
@@ -157,26 +159,29 @@ export default class App extends React.Component{
               :
               <>
               <NavigationContainer>
-              <Stack.Navigator>
-                
-                <Stack.Screen name="Dashboard" component={UserScreen}
-                options={{
-                  headerTitleAlign: 'center',
-                  headerTitleStyle:{color:'#fff'},
-                  headerTintColor:'#fff',
-                  headerBackground:((props)=>{
-                    return <LinearGradient
-                        // Background Linear Gradient
-                        colors={['rgba(245,148,183,1)', 'rgba(173,127,251,1)','rgba(146,178,253,1)']}
-                        style={styles.background}
-                        end={{x:0.9,y:0.9}}
-                    />
-                  }),
-                                  }}
-                />
-                <Stack.Screen name="Home" component={this.HomeScreen}
-                />
-              </Stack.Navigator>
+					<Drawer.Navigator
+	
+					drawerContent={props=> <DrawerContent {...props} />}
+					>
+
+						<Drawer.Screen name="Dashboard" component={UserScreen}
+						options={{
+							headerTitleAlign: 'center',
+							headerTitleStyle:{color:'#fff'},
+							headerTintColor:'#fff',
+							headerBackground:((props)=>{
+							return <LinearGradient
+								// Background Linear Gradient
+								colors={['rgba(245,148,183,1)', 'rgba(173,127,251,1)','rgba(146,178,253,1)']}
+								style={styles.background}
+								end={{x:0.9,y:0.9}}
+							/>
+							}),
+											}}
+						/>
+						<Drawer.Screen name="Home" component={this.HomeScreen}
+						/>
+					</Drawer.Navigator>
             </NavigationContainer>
               </>
           }
