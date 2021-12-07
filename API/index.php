@@ -29,7 +29,7 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
-        $this->env = 'livehost';
+        $this->env = 'development';
         if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
         } else {
@@ -72,6 +72,10 @@ class index
             case 'dashboard':
 
                 require_once __DIR__ . '/templates/dashboard.php';
+                break;
+
+            case 'template':
+                require_once __DIR__ . '/templates/template.php';
                 break;
 
             default:

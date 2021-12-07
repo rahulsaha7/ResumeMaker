@@ -80,7 +80,7 @@ class Forgot
         for ($i = 0; $i < count($this->result); $i++) {
 
             $resumeNo = $this->result[$i]['resumeNo'];
-            $this->sql = "SELECT id,name,email,image from PersonalDetails where resumeNo = $resumeNo ";
+            $this->sql = "SELECT id,resumeNo,name,email,image from PersonalDetails where resumeNo = $resumeNo ";
             $this->db->query($this->sql);
             if ($this->db->sql_query->rowCount() > 0) {
                 $rsData =  $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
