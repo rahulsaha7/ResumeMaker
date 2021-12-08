@@ -18,6 +18,7 @@ require_once '../include/db.php';
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         echo "hello world";
 
+
         $test = $_POST['check'];
 
 

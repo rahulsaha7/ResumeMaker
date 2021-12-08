@@ -52,13 +52,15 @@ class resumes
         $this->db = new database();
         $this->sql = "SELECT   * from resume where userID = $this->id";
 
+
+
         $this->db->query($this->sql);
         if ($this->db->sql_query->rowCount() > 0) {
             $this->message = "resumes are here";
             $this->success = true;
             $this->values = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            $this->message = "Opps! looks like templates are gone somewhere";
+            $this->message = "you havn't created any resume";
             $this->success = false;
             $this->values = null;
         }
