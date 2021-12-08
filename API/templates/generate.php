@@ -100,6 +100,8 @@ class generate
         $custom = "";
         foreach ($this->data as $value) {
             $edu = $value['education'];
+            print_r($edu);
+            exit();
             $personal = $value['profile'];
             $exp = $value['experience'];
             $projects = $value['projects'];
@@ -148,6 +150,8 @@ class generate
                 $this->db->query_value($sql, $this->values);
                 if ($this->db->sql_query->rowCount() <= 0) {
                     break;
+                } else {
+                    "yes";
                 }
             }
         } else {
