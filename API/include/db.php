@@ -57,7 +57,7 @@ class database
                 $this->result = false;
             }
         } catch (PDOException $e) {
-            echo "oops ! looks like something went wrong";
+            echo "oops ! looks like something went wrong" . $e->getMessage();
         }
     }
 
