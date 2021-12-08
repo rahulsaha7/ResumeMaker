@@ -337,24 +337,24 @@ class generate
             // exit();
             ob_start();
 
-            include './' . $this->t_location;
-            //include './uploads/template1/index.php';
+            include './uploads/template1/' . $this->t_name;
             $body = ob_get_clean();
-            //echo $body;
+
             $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
             require_once  './vendor/autoload.php';
             $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'tempDir' =>  './mPdfFiles']);
             $mpdf->WriteHTML($body);
-            // $mpdf->SetWatermarkText('EasyResume');
-            // $mpdf->showWatermarkText = true;
-            // $mpdf->watermarkTextAlpha = 0.1;
-            $filename = './generatedResumes/' . $name . ".pdf";
+
+            $filename = './generatedResumes/' . $this->resumeNo . ".pdf";
             $mpdf->Output($filename, 'F');
-            $this->data = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/generatedResumes/' . $name . ".pdf";
+            $env3 = "lv";
+            if ($env3 === "development")
+                $this->data = 'http://localhost/Backend/API/generatedResumes/' . $this->resumeNo . ".pdf";
+            else
+                $this->data = 'https://drkeasyresume.herokuapp.com/generatedResumes/' . $this->resumeNo . ".pdf";
 
             $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
-            // echo $sql;
-            // exit();
+
             $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {
                 $this->success = true;
@@ -369,6 +369,7 @@ class generate
 
     private function getTemplateFile()
     {
+
         $sql = "SELECT * from template_master where id = $this->t_id";
         $this->db->query($sql);
         if ($this->db->sql_query->rowCount() > 0) {
@@ -376,6 +377,7 @@ class generate
             $test = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
             $this->t_name = $test[0]['name'];
             $this->t_location = $test[0]['location'];
+            $this->t_name = $test[0]['name'];
         }
     }
 
