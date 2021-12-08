@@ -337,7 +337,8 @@ class generate
             // exit();
             ob_start();
 
-            include './uploads/template1/' . $this->t_name;
+            // include './uploads/template1/' . $this->t_name;
+            include './uploads/template1/index.php';
             $body = ob_get_clean();
 
             $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
