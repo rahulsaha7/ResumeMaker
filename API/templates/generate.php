@@ -69,7 +69,7 @@ class generate
                 $this->id = $decode->userId;
                 //echo $templateData;
                 $templateData = file_get_contents('php://input');
-                // var_dump($templateData);
+                // var_dump($templateData); 
                 $this->data = json_decode($templateData, true);
 
 
@@ -356,8 +356,9 @@ class generate
             $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {
                 $this->success = true;
-                $this->data = 'generatedResumes' . "/" . $name . ".pdf";
+                $this->data = $this->data;
             } else {
+                $this->success = false;
                 $this->data = "can't store resume address to database";
             }
         }
