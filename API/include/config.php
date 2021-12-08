@@ -1,7 +1,7 @@
 <?php
 
 
-$env2 = 'development';
+$env2 = 'liveServer';
 
 if ($env2 == 'development') {
 

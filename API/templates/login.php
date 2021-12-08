@@ -76,7 +76,7 @@ class login
                 // $_SESSION['authCredentials'] = $this->sessionData;
                 $this->secretCode = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew";
                 $this->issuedAt   = new DateTimeImmutable();
-                $this->expire     = $this->issuedAt->modify('+6 minutes')->getTimestamp();
+                $this->expire     = $this->issuedAt->modify('+180 minutes')->getTimestamp();
                 $this->payload = array(
                     'iat'  => $this->issuedAt->getTimestamp(),         // Issued at: time when the token was generated
                     'nbf'  => $this->issuedAt->getTimestamp(),
