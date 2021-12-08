@@ -44,7 +44,9 @@ class generate
     private $id;
     private $t_id;
     private $resumeNo;
-    private $Data = [];
+    private $data;
+    private $t_name;
+    private $t_location;
 
     public function __construct()
     {
@@ -292,29 +294,84 @@ class generate
         //insert name aslo as only by that name I can include file
         $this->db->query($sql);
         if ($this->db->sql_query->rowCount() > 0) {
-            $sql = "SELECT * from resume r,PersonalDetails p,EducationDetails e,Experience ep, Skills s where r.resumeNo = p.resumeNo and r.resumeNo = e.resumeNo and r.resumeNo = ep.resumeNo  and r.resumeNo = s.resumeNo and r.resumeNo = $this->resumeNo";
+
+            $this->getTemplateFile();
+
+            $sql = "SELECT * from resume r,PersonalDetails p  where  r.resumeNo = p.resumeNo and r.resumeNo = $this->resumeNo";
             // echo $sql;
             $this->db->query($sql);
+
+            $personal = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+            $sql = "SELECT * from resume r,EducationDetails ed  where  r.resumeNo = ed.resumeNo and r.resumeNo = $this->resumeNo";
+            $this->db->query($sql);
+
+            $edu = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "SELECT * from resume r,Experience ep  where r.resumeNo = ep.resumeNo and r.resumeNo = $this->resumeNo";
+            $this->db->query($sql);
+
+
+            $exp = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+
+            $sql = "SELECT * from resume r,Skills s  where r.resumeNo = s.resumeNo and r.resumeNo = $this->resumeNo";
+            $this->db->query($sql);
+
+
+            $skills = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+
+            $name = $personal[0]['name'];
+            $email = $personal[0]['email'];
+            $summery = $personal[0]['PSummery'];
+            $img = file_get_contents('./uploads/template1/images/avatar.jpg');
+
+            // Encode the image string data into base64
+            $data = base64_encode($img);
+            // echo $data;
+            // exit();
+            ob_start();
+
+            include './' . $this->t_location;
+            //include './uploads/template1/index.php';
+            $body = ob_get_clean();
+            //echo $body;
+            $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
+            require_once  './vendor/autoload.php';
+            $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'tempDir' =>  './mPdfFiles']);
+            $mpdf->WriteHTML($body);
+            // $mpdf->SetWatermarkText('EasyResume');
+            // $mpdf->showWatermarkText = true;
+            // $mpdf->watermarkTextAlpha = 0.1;
+            $filename = './generatedResumes/' . $name . ".pdf";
+            $mpdf->Output($filename, 'F');
+            $this->data = 'generatedResumes/' . $name . ".pdf";
+
+            $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
+            // echo $sql;
+            // exit();
+            $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {
-                $resumes = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
-                $name = $resumes[0]['name'];
-                $email = $resumes[0]['email'];
-                $summery = $resumes[0]['PSummery'];
-                ob_start();
-                readfile('./uploads/template5.php');
-                $body = ob_get_clean();
-                //echo $body;
-                $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
-                require_once  './vendor/autoload.php';
-                $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'tempDir' =>  './mPdfFiles']);
-                $mpdf->WriteHTML($body);
-                $mpdf->SetWatermarkText('EasyResume');
-                $mpdf->showWatermarkText = true;
-                $mpdf->watermarkTextAlpha = 0.1;
-                // $filename = "EasyResume" . rand(1000000, 99999999) . ".pdf";
-                $mpdf->Output();
+                $this->success = true;
+                $this->data = 'generatedResumes' . "/" . $name . ".pdf";
+            } else {
+                $this->data = "can't store resume address to database";
             }
-        } else {
+        }
+    }
+
+    private function getTemplateFile()
+    {
+        $sql = "SELECT * from template_master where id = $this->t_id";
+        $this->db->query($sql);
+        if ($this->db->sql_query->rowCount() > 0) {
+
+            $test = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+            $this->t_name = $test[0]['name'];
+            $this->t_location = $test[0]['location'];
         }
     }
 
@@ -327,7 +384,7 @@ class generate
             "status" => $this->status,
             "success" => $this->success,
             "message" => $this->message,
-            "data" => $this->Data
+            "data" => $this->data
         );
         echo json_encode($this->result);
     }

@@ -12,7 +12,7 @@ require_once __DIR__ . '/include/init.php';
 
 
 session_start();
-error_reporting(-1);
+error_reporting(0);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
@@ -29,7 +29,7 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
-        $this->env = 'liveServer';
+        $this->env = 'lv';
         if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
         } else {
@@ -81,6 +81,16 @@ class index
             case 'generate':
                 require_once __DIR__ . '/templates/generate.php';
                 break;
+
+
+            case 'uploads':
+                require_once __DIR__ . '/templates/upload.php';
+                break;
+
+            case 'resumes':
+                require_once __DIR__ . '/templates/resumes.php';
+                break;
+
 
             default:
                 $result = array(

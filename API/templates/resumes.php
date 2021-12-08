@@ -3,7 +3,7 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class authCred
+class resumes
 {
 
     public $status;
@@ -50,11 +50,11 @@ class authCred
     {
 
         $this->db = new database();
-        $this->sql = "SELECT * from template_master where 1";
+        $this->sql = "SELECT   * from resume where userID = $this->id";
 
         $this->db->query($this->sql);
         if ($this->db->sql_query->rowCount() > 0) {
-            $this->message = "templates are here";
+            $this->message = "resumes are here";
             $this->success = true;
             $this->values = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
         } else {
@@ -76,4 +76,4 @@ class authCred
     }
 };
 
-$login = new authCred();
+$login = new resumes();
