@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, Pressable,Modal,Share,Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable,Modal,Share,Alert,ActivityIndicator } from 'react-native'
 import { withTheme, Button,Snackbar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
+import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //import * as Permissions from 'expo-permissions'
 
 const images = [{
     // Simplest usage.
-    url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
- 
+    //url: 'https://blog.hubspot.com/hs-fs/hubfs/Resume%20Template%201.jpg?width=1500&name=Resume%20Template%201.jpg',
+    url: 'https://cdn.buttercms.com/l14mPCbrSE2sguvz0rKV',
     // width: number
     // height: number
     // Optional, if you know the image size, you can set the optimization performance
@@ -97,23 +98,26 @@ class Preview extends Component {
                         <Image style={styles.resumeImage} resizeMode="contain" source={require('./../assets/resume.png')}/>
                     </Pressable>
                 </View>
-                <View style={styles.buttonContainer}>
+
+                <View style={styles.ButtonContainer}>
                     <LinearGradient
-                            colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
-                            end={{x:0.9,y:0.9}}
-                            style={styles.btnGradient}>
-                            <Button icon="arrow-down-bold-box" style={styles.button} labelStyle={styles.buttonText} mode="text" color="#ffffff" onPress={()=>{this.downloadFile()}}>
-                               Download
+                        colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
+                        end={{x:0.9,y:0.9}}
+                        style={styles.ButtonGradient}
+                        >
+                            <Button icon="arrow-down-bold-box" style={styles.button} labelStyle={{paddingHorizontal:15,paddingVertical:5}} mode="text" color="#ffffff" onPress={()=>{this.downloadFile()}}>
+                            <Text style={styles.buttonText}>Download</Text>
                             </Button>
                     </LinearGradient>
                 </View>
-                <View style={styles.buttonContainer}>
+                <View style={styles.ButtonContainer}>
                     <LinearGradient
-                            colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
-                            end={{x:0.9,y:0.9}}
-                            style={styles.btnGradient}>
-                            <Button icon="share" style={styles.button} labelStyle={styles.buttonText} mode="text" color="#ffffff" onPress={this.onShare}>
-                               Share Link
+                        colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
+                        end={{x:0.9,y:0.9}}
+                        style={styles.ButtonGradient}
+                        >
+                            <Button icon="share" style={[styles.button,{padding:0}]} labelStyle={{paddingHorizontal:11,paddingVertical:5}} mode="text" color="#ffffff" onPress={this.onShare}>
+                               <Text style={styles.buttonText}>Share Link</Text>
                             </Button>
                     </LinearGradient>
                 </View>
@@ -124,7 +128,18 @@ class Preview extends Component {
                 enableSwipeDown={true}
                 onSwipeDown={()=>{this.setState({preview:false})}}
                 onCancel={()=>{this.setState({preview:false})}}
-                loadingRender={()=><Text>Loading</Text>}
+                backgroundColor="#444"
+                loadingRender={()=><ActivityIndicator size="large" color="#AF7DFB" />}
+                saveToLocalByLongPress={false}
+                renderHeader={(index) => {
+                    return <Pressable
+                            onPress={
+                                ()=> this.setState({preview:false})
+                            }
+                            >
+                                <MCIcons style={{padding:15}} name="keyboard-backspace" color="#fff" size={30}/>
+                            </Pressable>
+                    }}
                 />
             </Modal>
 
@@ -160,15 +175,16 @@ const styles = StyleSheet.create({
         height: 400,
         borderRadius:5
     },
-    buttonContainer:{
-        margin:5
+    ButtonContainer:{
+        marginVertical:10,
+        alignItems:'center'
     },
-    btnGradient:{
-        borderRadius: 30,
+    ButtonGradient:{
+        borderRadius:30
     },
-    button:{
-        paddingHorizontal: 30,
-        paddingVertical:5
+    buttonText:{
+        marginVertical:20,
+        paddingHorizontal:40
     },
     buttonText:{
         fontSize:16

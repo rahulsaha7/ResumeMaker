@@ -118,6 +118,35 @@ export default class ChooseTemplate extends Component {
                             null
                         }
                     </View>
+                    <View style={styles.imageContainer}>
+                        <Pressable
+                            onPress={()=>this.setState({checkid:6})}
+                        >
+                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
+                        </Pressable>
+                        {checkid===6?
+                            <View style={styles.checkbox}>
+                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
+                            </View>
+                            :
+                            null
+                        }
+                    </View>
+
+                    <View style={styles.imageContainer}>
+                        <Pressable
+                            onPress={()=>this.setState({checkid:7})}
+                        >
+                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
+                        </Pressable>
+                        {checkid===7?
+                            <View style={styles.checkbox}>
+                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
+                            </View>
+                            :
+                            null
+                        }
+                    </View>
 
 
                 </View>
