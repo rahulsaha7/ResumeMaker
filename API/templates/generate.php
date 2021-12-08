@@ -150,7 +150,6 @@ class generate
                 if ($this->db->sql_query->rowCount() <= 0) {
                     break;
                 } else {
-                    echo "yes";
                 }
             }
         } else {
@@ -351,7 +350,7 @@ class generate
             // $mpdf->watermarkTextAlpha = 0.1;
             $filename = './generatedResumes/' . $name . ".pdf";
             $mpdf->Output($filename, 'F');
-            $this->data = 'generatedResumes/' . $name . ".pdf";
+            $this->data = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/generatedResumes/' . $name . ".pdf";
 
             $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
             // echo $sql;
@@ -359,10 +358,11 @@ class generate
             $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {
                 $this->success = true;
-                $this->data = $this->data;
+                $this->data =  $this->data;
             } else {
                 $this->success = false;
-                $this->data = "can't store resume address to database";
+                $this->message = "can't store resume address to database";
+                $this->data  = null;
             }
         }
     }

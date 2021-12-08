@@ -44,7 +44,7 @@ require_once '../include/db.php';
                 if (move_uploaded_file($temp_template_name, $test1)) {
                     $folder1 = "uploads/" . $template_name;
                     if (move_uploaded_file($temp_thumbnail_name, $test1)) {
-                        $folder2 = "uploads/" . $thumbnail_name;
+                        $folder2 = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "/uploads/" . $thumbnail_name;
 
                         //Upload that documents to database
                         $db = new database();
