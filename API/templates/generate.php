@@ -348,11 +348,10 @@ class generate
 
             $filename = './generatedResumes/' . $this->resumeNo . ".pdf";
             $mpdf->Output($filename, 'F');
-            $env3 = "lv";
-            if ($env3 === "development")
-                $this->data = 'http://localhost/Backend/API/generatedResumes/' . $this->resumeNo . ".pdf";
-            else
-                $this->data = 'https://drkeasyresume.herokuapp.com/generatedResumes/' . $this->resumeNo . ".pdf";
+
+
+
+            $this->data = BASE_URL . 'Backend/API/generatedResumes/' . $this->resumeNo . ".pdf";
 
             $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
 
@@ -367,6 +366,14 @@ class generate
             }
         }
     }
+
+
+    //     192.168.0.100
+    // Username:
+    // rahulsah_mad
+    // Password:
+    // Rahul1234@
+
 
     private function getTemplateFile()
     {
