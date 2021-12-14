@@ -44,7 +44,7 @@ require_once '../include/db.php';
                 if (move_uploaded_file($temp_template_name, $test1)) {
                     $folder1 = "uploads/" . $template_name;
                     if (move_uploaded_file($temp_thumbnail_name, $test1)) {
-                        $folder2 = "http://localhost/Backend/API/uploads/" . $thumbnail_name;
+                        $folder2 = "https://www.maldanattyasena.xyz/uploads/" . $thumbnail_name;
 
                         //Upload that documents to database
                         $db = new database();

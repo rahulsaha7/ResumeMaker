@@ -351,7 +351,7 @@ class generate
 
 
 
-            $this->data = BASE_URL . 'Backend/API/generatedResumes/' . $this->resumeNo . ".pdf";
+            $this->data = BASE_URL . '/generatedResumes/' . $this->resumeNo . ".pdf";
 
             $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
 
