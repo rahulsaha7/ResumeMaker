@@ -87,12 +87,13 @@ class Signup
                 $this->message = "Registration Successfull";
                 $this->secretCode = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew";
                 $this->issuedAt   = new DateTimeImmutable();
-                $this->expire     = $this->issuedAt->modify('+1 minutes')->getTimestamp();
+                $this->expire     = $this->issuedAt->modify('+3600 minutes')->getTimestamp();
                 $this->payload = array(
                     'iat'  => $this->issuedAt->getTimestamp(),         // Issued at: time when the token was generated
                     'nbf'  => $this->issuedAt->getTimestamp(),
                     'exp'  => $this->expire,
                     'userId' => $this->values[0],
+                    'name' => $this->values[1],
                     'username' => $this->values[2]
                 );
                 $this->jwt = JWT::encode($this->payload, $this->secretCode, 'HS256');

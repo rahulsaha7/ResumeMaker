@@ -1,7 +1,3 @@
-<?php
-require_once '../include/db.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +12,25 @@ require_once '../include/db.php';
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        echo "hello world";
+
+        try {
+
+
+
+            $env = 'lv';
+            if ($env == 'lv') {
+                $conn = new PDO("mysql:host=localhost;dbname=maldanat_downtimealert", 'maldanat_easyresume', 'easyresume');
+            } else {
+                $conn = new PDO("mysql:host=localhost;dbname=MAD", 'root', 'Rahul@7242');
+            }
+
+
+
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo 'Something went wrong, please connect with the adminsitrator' . $e;
+        }
+
 
 
         $test = $_POST['check'];
@@ -34,25 +48,31 @@ require_once '../include/db.php';
             $thumbnail_name = $_FILES['thumbnail']['name'];
             $temp_thumbnail_name = $_FILES['thumbnail']['tmp_name'];
 
-            $path2 = "../uploads/" . $template_name;
-            $path3 = "../uploads/" . $thumbnail_name;
+            // echo $thumbnail_name;
+            // exit();
+            $generate = rand(10, 100000000);
+            $path2 = "../uploads/" . $generate . $template_name;
+            $path3 = "../uploads/" . $generate . $thumbnail_name;
 
-            $test1 = "../uploads/" . $template_name;
-            $test2 =  "../uploads/" . $thumbnail_name;
+            $test1 = "../uploads/" . $generate . $template_name;
+            $test2 =  "../uploads/" . $generate . $thumbnail_name;
 
             if (!file_exists($path2) && !file_exists($path3)) {
                 if (move_uploaded_file($temp_template_name, $test1)) {
-                    $folder1 = "uploads/" . $template_name;
-                    if (move_uploaded_file($temp_thumbnail_name, $test1)) {
-                        $folder2 = "https://www.maldanattyasena.xyz/uploads/" . $thumbnail_name;
+                    $folder1 = "uploads/" . $generate . $template_name;
+                    if (move_uploaded_file($temp_thumbnail_name, $test2)) {
+                        chmod($test1, 0777);
+                        $folder2 = "https://www.maldanattyasena.xyz/uploads/" . $generate . $thumbnail_name;
 
                         //Upload that documents to database
-                        $db = new database();
+                        //$db = new database();
                         $sql = "INSERT into template_master(name,location,thumbnail) values('$template_name','$folder1','$folder2')";
-
-
-                        $db->query($sql);
-                        $db->close_connection();
+                        try {
+                            $sql_query = $conn->prepare($sql);
+                            $sql_query->execute();
+                        } catch (PDOException $e) {
+                            echo "oops ! looks like something went wrong" . $e->getMessage();
+                        }
                     }
                 } else {
                     echo "no directory";

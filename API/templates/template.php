@@ -19,29 +19,10 @@ class authCred
     {
 
 
-        try {
 
-            $bearerToken = $_SERVER['HTTP_AUTHORIZATION'];
-            if ($bearerToken) {
+        $this->showTemplates();
 
-
-                //If token is there then verify first then use it
-
-                $decode = JWT::decode($bearerToken, new Key('bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew', 'HS256'));
-                $this->id = $decode->userId;
-
-
-                $this->showTemplates();
-            } else {
-                $this->success = false;
-                $this->message = "Token is missing";
-            }
-        } catch (Exception $e) {
-
-            $this->message =  $e->getMessage();
-        } finally {
-            $this->ResultReturn();
-        }
+        $this->ResultReturn();
     }
 
 

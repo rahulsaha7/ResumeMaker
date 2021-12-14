@@ -9,7 +9,7 @@ class resumes
     public $status;
     private $success;
     private $message;
-    private $values;
+    private $values = [];
     private $db;
     private $sql;
     private $result;
@@ -50,19 +50,29 @@ class resumes
     {
 
         $this->db = new database();
-        $this->sql = "SELECT   * from resume where userID = $this->id";
-
-
+        $this->sql = "SELECT resumeNo from resume where userID = $this->id";
 
         $this->db->query($this->sql);
         if ($this->db->sql_query->rowCount() > 0) {
             $this->message = "resumes are here";
             $this->success = true;
-            $this->values = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+            $result = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $value) {
+                $resume = $value['resumeNo'];
+                $this->sql = "SELECT name,email,image,r.resumeNo from resume r,PersonalDetails p where r.resumeNo = p.resumeNo and  r.resumeNo = $resume";
+                $this->db->query($this->sql);
+                if ($this->db->sql_query->rowCount() > 0) {
+
+
+                    $check = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+                    array_push($this->values, $check[0]);
+                }
+            }
         } else {
             $this->message = "you havn't created any resume";
-            $this->success = false;
-            $this->values = null;
+            $this->success = true;
+            $this->values = [];
         }
     }
 

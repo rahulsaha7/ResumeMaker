@@ -47,6 +47,7 @@ class generate
     private $data;
     private $t_name;
     private $t_location;
+    private $thumbnaillink;
 
     public function __construct()
     {
@@ -237,8 +238,8 @@ class generate
         if ($p) {
 
             foreach ($lan as $value) {
-                $sql = "INSERT into Languages (resumeNo,l_name,l_level) values(?,?,?)";
-                $this->values = array($this->resumeNo, $value['languageName'], $value['languageLevel']);
+                $sql = "INSERT into Languages (resumeNo,l_name) values(?,?)";
+                $this->values = array($this->resumeNo, $value['languageName']);
                 $this->db->query_value($sql, $this->values);
                 if ($this->db->sql_query->rowCount() <= 0) {
                     break;
@@ -337,8 +338,11 @@ class generate
             // exit();
             ob_start();
 
-            include './uploads/template1/' . $this->t_name;
-            // include './uploads/template1/index.php';
+
+            include './' . $this->t_location;
+
+
+
             $body = ob_get_clean();
 
             $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
@@ -353,7 +357,13 @@ class generate
 
             $this->data = BASE_URL . '/generatedResumes/' . $this->resumeNo . ".pdf";
 
-            $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
+            $imagick = new Imagick();
+            $imagick->readImage('generatedResumes/' . $this->resumeNo . '.pdf[0]');
+            $imagick->writeImages('./thumbnails/' . $this->resumeNo . ".png", false);
+
+            $this->thumbnaillink = BASE_URL . '/thumbnails/' . $this->resumeNo . ".png";
+
+            $sql = "UPDATE `resume` SET `r_location` = '$this->data',`r_thumbnail` = '$this->thumbnaillink'  WHERE `resume`.`resumeNo` = $this->resumeNo";
 
             $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {
@@ -398,7 +408,8 @@ class generate
             "status" => $this->status,
             "success" => $this->success,
             "message" => $this->message,
-            "data" => $this->data
+            "data" => $this->data,
+            "thumbnail" => $this->thumbnaillink
         );
         echo json_encode($this->result);
     }

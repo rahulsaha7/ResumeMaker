@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;  
+        }
+        h4,h5,h6{
+            color: white;
+        }
+        span{
+            display: inline-block;
+            color: white;
+        }
+        .rows {
+            width: 240px;
+            min-width: 220px;
+            max-width: 250px;
+            height: 100vh;
+            background-color: rgb(76, 86, 106);
+        }
+        .row2{
+            width: calc(100vw - 240px);
+            min-width: calc(100vw - 220px);
+            max-width: calc(100vw - 250px);
+            height: 100vh;
+        }
+        .profile-image-holder{
+            height: 200px;
+            width: 200px;
+            border-collapse: separate !important;
+            perspective: 1px;
+            border-radius: 50%;
+        }
+        .profile-image {
+            height: 100%;
+            width: 100%;
+        }
+        address.address-holder::before {
+            content: "";
+            width: 55px;
+            height: 2px;
+            background-color: white;
+            display: block;
+            margin-bottom: 10px;
+        }
+        section.education-holder::before{
+            content: "";
+            width: 55px;
+            height: 2px;
+            background-color: white;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .title-header{
+            height: 200px;
+            width: 100vw;
+            background-color: #E3E3E3;
+        }
+        .divider,section.summary::before {
+            content: "";
+            width: 55px;
+            height: 2px;
+            background-color: black;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .profile,.position-name {
+            color: black;
+        }
+        .company-name,.date {
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container-fluid p-0 m-0">
+        <table>
+           
+            <tbody>
+                    <!-- <tr> -->
+                        <td class="rows">
+                                <figure class="profile-image-holder ps-3 pe-3"> 
+                                        <img  class="profile-image" src="avatar.jpg" alt="profile picture">
+                                </figure>
+                                <h4 class="px-3">Contact</h3>
+                                <address class="address-holder ps-3 pe-3 mt-2">
+                                   
+                                        <div>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span class="ps-2">location here</span>
+
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-phone-alt"></i>
+                                            <span class="ps-2">call here</span>
+                                        </div>
+                                        <div>
+                                            <i class="far fa-envelope"></i>
+                                            <span class="ps-2">mail here</span>
+                                        </div> 
+
+                                </address>
+
+                                <h4 class="mt-5 ps-3"> Education </h4>
+                                <section class="education-holder ps-3">
+                                    <div class="edus mt-3" >
+                                        <h5>MCA</h5>
+                                        <h6>2020-2022</h6>
+                                        <span>Pondicherry University</span>
+                                    </div>
+                                    <div class="edus mt-2">
+                                        <h5>B.Sc</h5>
+                                        <h6>2017-2020</h6>
+                                        <span>Gour Mahavidyalaya</span>
+                                    </div>
+
+                                </section>
+                                
+                        </td>
+                        <td class="row2">
+                            <header class=" ps-3" >
+                                <div class="container-fluid title-header ps-2">
+                                    <section class="text-center pt-5">
+                                        <h1>RAHUL SAHA</h1>
+                                    </section>
+                                    <section class="w-100"> 
+                                        <section class="divider text-center"></section>
+                                    </section>
+                                    <section class="text-center pt-2"> Software Developer</section>
+                                    
+
+                                </div>
+
+                            </header>
+
+                            <main class="mt-3">
+                                <h4 class="experience profile ps-3">Profile</h4>
+                                <section class="summary ps-3">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at eros ultricies, luctus lacus vel, rhoncus velit. Duis sagittis ornare sem, eu porttitor orci congue id. Nunc mattis odio in ligula hendrerit, eget laoreet mi molestie. Donec in eleifend est, vitae malesuada elit. Aliquam erat volutpat. Nulla ac vehicula erat. Suspendisse justo sapien, ornare at efficitur id, posuere nec risus. Fusce pulvinar dignissim placerat. Sed et malesuada arcu. Duis vestibulum est ac nisi porttitor, quis aliquet metus facilisis. Sed congue blandit sodales. Nunc id tristique libero. Duis ut nibh ac lorem elementum vulputate id ac nunc. Sed dictum odio viverra tellus posuere venenatis. </p>
+                                </section>
+
+                                <h4 class="profile ps-3 pt-3">Experience</h4>
+                                <section class="summary ps-3">
+                                    <div class="pt-1">
+                                        
+                                        <h6 class="position-name" ><b> Software developer</b></h6>
+                                        <span class="company-name float-left">Rs Solutions pvt. ltd.</span>
+                                        <span class="date" style="display:block;"> 2020-present</span>
+                                        <p class="summary">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos alias tempora impedit molestiae eum corrupti maiores voluptate quis nam minima reprehenderit provident blanditiis numquam sit facilis error, facere quia nihil?
+                                        </p>
+                                    </div>
+                                    <div class="pt-1">
+                                        
+                                        <h6 class="position-name"> <b> Software developer</b> </h6>
+                                        <span class="company-name float-left">Rs Solutions pvt. ltd.</span>
+                                        <span class="date" style="display:block;"> 2020-present</span>
+                                        <p class="summary">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos alias tempora impedit molestiae eum corrupti maiores voluptate quis nam minima reprehenderit provident blanditiis numquam sit facilis error, facere quia nihil?
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <h4 class="skills profile ps-3">Skills</h4>
+                                <section class="summary ps-3">
+                                    <div class="pt-1">
+                                        
+                                        <h6 class="position-name" ><b> HTML</b></h6>
+                                        <h6 class="position-name" ><b> CSS</b></h6>
+                                        <h6 class="position-name" ><b> PHP</b></h6>
+                                        <h6 class="position-name" ><b> Javascript</b></h6>
+                                       
+                                    </div>
+                                </section>
+                            </main>
+
+                        </td>
+                    <!-- </tr> -->
+            </tbody>
+        </table>
+       
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>

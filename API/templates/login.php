@@ -62,7 +62,7 @@ class login
     private function Login($email, $password)
     {
         $this->values = array($email);
-        $this->sql = "SELECT userID,email,password from auth where email = ?";
+        $this->sql = "SELECT userID,name,email,password from auth where email = ?";
         $this->db = new database();
         $this->db->query_value($this->sql, $this->values);
 
@@ -76,12 +76,13 @@ class login
                 // $_SESSION['authCredentials'] = $this->sessionData;
                 $this->secretCode = "bGS6lzFqvvSQ8ALbOxatm7/Vk7mLQyzqaS34Q4oR1ew";
                 $this->issuedAt   = new DateTimeImmutable();
-                $this->expire     = $this->issuedAt->modify('+180 minutes')->getTimestamp();
+                $this->expire     = $this->issuedAt->modify('+3600 minutes')->getTimestamp();
                 $this->payload = array(
                     'iat'  => $this->issuedAt->getTimestamp(),         // Issued at: time when the token was generated
                     'nbf'  => $this->issuedAt->getTimestamp(),
                     'exp'  => $this->expire,
                     'userId' => $this->result[0]['userID'],
+                    'name' => $this->result[0]['name'],
                     'username' => $this->result[0]['email']
                 );
                 $this->jwt = JWT::encode($this->payload, $this->secretCode, 'HS256');
