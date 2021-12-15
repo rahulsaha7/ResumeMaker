@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Pressable, SafeAreaView } from 'react-native'
+import { Text, View, StyleSheet, Pressable, SafeAreaView,ScrollView, RefreshControl} from 'react-native'
 import AppBar from './AppBar'
 import { FAB,List } from 'react-native-paper';
 import 'react-native-gesture-handler';
+import axios from 'axios';
 
 import ResumeCard from './ResumeCard';
 import ProfileDetails from './ProfileDetails';
+import { HOST } from './config';
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import ActivityLoading from './ActivityLoading';
+import { ERContext } from '../ERContext';
+//import { color } from 'react-native-reanimated';
+//import { ScrollView } from 'react-native-gesture-handler';
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -15,13 +20,64 @@ export class Dashboard extends Component {
     
         this.state = {
              itemsCount:1,
+             resumes:[],
+             showLoading:true,
+             refreshing:false
         }
     }
+    
+    componentDidMount = ()=>{
+        this._fetchResumes();
+    }
+
+    _onRefresh = ()=>{
+        this.setState({refreshing:true});
+        this._fetchResumes();
+    }
+
+    _fetchResumes = async() => {
+
+        if(this.context.isConnected){
+            console.log(this.context.token);
+            try{
+                const response = await axios.post(HOST + '/resumes',{},{
+                    headers:{
+                        "Authorization":this.context.token,
+                    }
+                });
+
+                if(response.status === 200){
+                    console.log(response.data);
+                    if(response.data.success === true){
+                        console.log('---------------------resumes----------------');
+                        console.log(response.data.data);
+                        this.setState({resumes:response.data.data});
+                    }else{
+                        alert('Someting went wrong! Please restart the app');
+                    }
+                }else{
+                    alert('401');
+                }
+    
+            }catch(error){
+                console.log(error);
+            }
+        }else{
+            alert('no network');
+        }
+        this.setState({showLoading:false,refreshing:false});
+        
+    }
+
     
     render() {
        //const userNav = createDrawerNavigator();
 
        let { navigation } = this.props;
+       //console.log(this.state.resumes);
+        if(this.state.showLoading)
+            return <ActivityLoading msg ="Loading"/>
+        else
         return (
             <>
                 <FAB
@@ -31,20 +87,38 @@ export class Dashboard extends Component {
                     onPress={()=>this.props.navigation.push('Profile')}
                 />
                 
-                {this.state.itemsCount === 0 ?
+                {this.state.resumes.length === 0 ?
                     <View style={styles.noResumeContainer}>
                         <Text style={styles.noResumeText}>
                         You have not created any resume.
-                        To create one click one plus (+) button
+                        To create one click on plus (+) button
                         </Text>
                     </View>
                     :
                     // Resumes
-                    <View style={styles.resumeContainer}>
-                        <ResumeCard name="Kuntal Sarkar" email="kuntalsarkar00@gmail.com"/>
-                        <ResumeCard name="M. Dhivya" email="M.dhivya00@gmail.com"/>
-                        <ResumeCard name="Rahul Saha" email="RahulSaha@gmail.com"/>
-                    </View>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={
+                            <RefreshControl 
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh}
+                                enabled={true}
+                                colors={['rgba(245,148,183,1)', 'rgba(173,127,251,1)','rgba(146,178,253,1)']}
+                                />
+                        }>
+                        <View style={styles.resumeContainer}>
+                            {
+                                this.state.resumes.map((resume, index)=>{
+                                    return <Pressable
+                                                key={index}
+                                                onPress={()=>{this.props.navigation.push('Preview',{resume:resume})}}
+                                            >
+                                                <ResumeCard name={resume.name} email={resume.email} image={resume.image} resumeNo={resume.resumeNo}/>
+                                            </Pressable>
+                                })
+                            }
+                        </View>
+                    </ScrollView>
                 }
                 </>
 
@@ -85,4 +159,6 @@ const styles = StyleSheet.create({
   })
 
 
+
+Dashboard.contextType = ERContext;
 export default Dashboard

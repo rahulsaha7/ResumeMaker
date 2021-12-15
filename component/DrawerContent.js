@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Dimensions,StatusBar} from 'react-native'
+import { View, StyleSheet, Share,StatusBar,Alert} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Drawer, Text, Avatar } from 'react-native-paper'
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -34,9 +34,29 @@ class DrawerContent extends React.Component{
             console.log(e);
           }
     }
-
+    
+    onShare = async () => {
+        try {
+          const result = await Share.share({
+            message: 'Hey, Do you want to make some amazing resumes ? Try Easy Resume App  '+this.context.appUrl,
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error) {
+            console.log(error);
+          Alert.alert('Something went wrong');
+        }
+    }
     render(){
         let props = this.props;
+        console.log(this.context.name);
         return (     
             <DrawerContentScrollView {...props} style={{backgroundColor:'white'}} contentContainerStyle={{paddingTop:0,backgroundColor:'#92B2FD'}}>
 
@@ -70,13 +90,13 @@ class DrawerContent extends React.Component{
                                 <DrawerItem
                                     label="Share App"
                                     labelStyle={styles.drawerLabel}
-                                    onPress={()=>{props.navigation.navigate('Home')}}
+                                    onPress={this.onShare}
                                     icon={()=><MCIcons name="share-variant" color="#555" size={25}/>}
                                 />
                                 <DrawerItem
                                     label="About"
                                     labelStyle={styles.drawerLabel}
-                                    onPress={()=>{props.navigation.navigate('Home')}}
+                                    onPress={()=>{props.navigation.navigate('About')}}
                                     icon={()=><MCIcons name="information-variant" color="#555" size={25}/>}
                                 />
                                 <DrawerItem

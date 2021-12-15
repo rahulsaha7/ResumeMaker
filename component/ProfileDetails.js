@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, ScrollView, Image,Pressable } from 'react-native';
-import { FAB,List, Button,HelperText, Switch,IconButton, Headline, Subheading  } from 'react-native-paper';
+import { List, Button, Switch,IconButton} from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-
 import * as ImagePicker from 'expo-image-picker';
-
 import ProfileImg from './../assets/profile.png';
 import { ResumeDataContext } from '../ERContext';
 
@@ -16,6 +14,7 @@ export default class ProfileDetails extends Component {
         this.state = {
             profilePhoto: ProfileImg,
             resumeData:{
+                templateid:false,
                 profile:[],
                 education:[],
                 experience:[],
@@ -235,7 +234,7 @@ export default class ProfileDetails extends Component {
                 
                     title="Education Details"
                     titleStyle={styles.titleStyle}
-                    left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                    left={props => <List.Icon {...props} color="#fff" icon="book" />}
                     style={styles.accordian}
                     theme={{colors:{text: '#fff'}}}
                     >
@@ -336,7 +335,7 @@ export default class ProfileDetails extends Component {
                 
                 title="Experience Details"
                 titleStyle={styles.titleStyle}
-                left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                left={props => <List.Icon {...props} color="#fff" icon="briefcase" />}
                 style={styles.accordian}
                 theme={{colors:{text: '#fff'}}}
                 >
@@ -430,7 +429,7 @@ export default class ProfileDetails extends Component {
                 
                 title="Project Details"
                 titleStyle={styles.titleStyle}
-                left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                left={props => <List.Icon {...props} color="#fff" icon="wrench" />}
                 style={styles.accordian}
                 theme={{colors:{text: '#fff'}}}
                 >
@@ -523,7 +522,7 @@ export default class ProfileDetails extends Component {
                 
                 title="Skill Details"
                 titleStyle={styles.titleStyle}
-                left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                left={props => <List.Icon {...props} color="#fff" icon="podium" />}
                 style={styles.accordian}
                 theme={{colors:{text: '#fff'}}}
                 >
@@ -585,7 +584,7 @@ export default class ProfileDetails extends Component {
                 
                 title="Hobby Details"
                 titleStyle={styles.titleStyle}
-                left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                left={props => <List.Icon {...props} color="#fff" icon={require('./../assets/icons/drawing.png')} />}
                 style={styles.accordian}
                 theme={{colors:{text: '#fff'}}}
                 >
@@ -641,7 +640,7 @@ export default class ProfileDetails extends Component {
                 
                 title="Language Details"
                 titleStyle={styles.titleStyle}
-                left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                left={props => <List.Icon {...props} color="#fff" icon={require('./../assets/icons/language.png')} />}
                 style={styles.accordian}
                 theme={{colors:{text: '#fff'}}}
                 >
@@ -703,7 +702,7 @@ export default class ProfileDetails extends Component {
                 
                 title="Custom Section"
                 titleStyle={styles.titleStyle}
-                left={props => <List.Icon {...props} color="#fff" icon="account" />}
+                left={props => <List.Icon {...props} color="#fff" icon={require('./../assets/icons/adjustment.png')} />}
                 style={styles.accordian}
                 theme={{colors:{text: '#fff'}}}
                 >
@@ -798,7 +797,7 @@ const styles = StyleSheet.create({
       zIndex:-1
   },
     accordian:{
-        backgroundColor:'#AD7FFB',
+        backgroundColor:'#AD7FFBee',
         borderTopLeftRadius:10,
         borderTopRightRadius:10,
         marginTop:10,

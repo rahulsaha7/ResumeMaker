@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { AppRegistry, StyleSheet, Text, View, Button,Image,TouchableOpacity } from 'react-native';
-import { Drawer, DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import { AppRegistry, StyleSheet} from 'react-native';
+import { DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import  {name as appName } from './app.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from "@react-native-community/netinfo";
@@ -13,17 +13,12 @@ import 'react-native-gesture-handler';
 import jwt_decode from "jwt-decode";
 
 import OnboardingScreen from './component/OnboardingScreen';
-import SignIn from './component/SignIn';
-import SignUp from './component/SignUp';
-import AppBar from './component/AppBar';
-import Dashboard from './component/Dashboard';
 import Account from './component/Account';
-import ProfileDetails from './component/ProfileDetails';
 import { ERContext } from './ERContext';
 import UserScreen from './component/UserScreen';
 import DrawerContent from './component/DrawerContent'
-import Loading from './Loading';
-
+import Loading from './component/Loading';
+import About from './component/About';
 
 const theme = {
   ...DefaultTheme,
@@ -60,7 +55,9 @@ export default class App extends React.Component{
     this.isUserNew();
     this.isUserLoggedIn();
     this.updateConnection();
-    this.setState({showLoading:false})
+    setTimeout(()=>{
+      this.setState({showLoading:false});
+    },2000)
   }
 
 
@@ -73,6 +70,8 @@ export default class App extends React.Component{
       this.setState({
         isConnected:state.isConnected
       })
+      console.log('is connected');
+      console.log(state.isConnected);
     });
 }
 
@@ -105,10 +104,13 @@ export default class App extends React.Component{
       let value =  jsonValue != null ? jsonValue : null;
       if(value){
         let decoded = jwt_decode(value);
+        console.log(decoded);
         this.setState({
+          token:value,
           isLoggedIn:true,
-          name:decoded.userId,
-          email:decoded.username
+          name:decoded.name,
+          email:decoded.username,
+          appUrl:decoded.url,
         })
       }
     } catch(e) {
@@ -163,23 +165,13 @@ export default class App extends React.Component{
   }
 
 
-  HomeScreen({navigation}) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button
-        title="Go to Details"
-        onPress={() => console.log()}
-      />
-      </View>
-    );
-  }
+
 
   render(){
 
     const Drawer = createDrawerNavigator();
     if(this.state.showLoading)
-      return <Loading/>
+      return <Loading title="Loading"/>
     else
     return (
       <ERContext.Provider
@@ -188,11 +180,14 @@ export default class App extends React.Component{
         isLoggedIn : this.state.isLoggedIn,
         name:this.state.name,
         email:this.state.email,
+        token:this.state.token,
+        appUrl:this.state.appUrl,
         changeState: this.changeState,
         storeData  : this.storeData
         }}
       >
         <PaperProvider theme={theme}>
+          <StatusBar style="light"/>
 
           {
             this.state.firstTime ? 
@@ -223,7 +218,19 @@ export default class App extends React.Component{
                     }),
                             }}
                   />
-                  <Drawer.Screen name="Home" component={this.HomeScreen}
+                  <Drawer.Screen name="About" component={About} options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle:{color:'#fff'},
+                    headerTintColor:'#fff',
+                    headerBackground:((props)=>{
+                    return <LinearGradient
+                      // Background Linear Gradient
+                      colors={['rgba(245,148,183,1)', 'rgba(173,127,251,1)','rgba(146,178,253,1)']}
+                      style={styles.background}
+                      end={{x:0.9,y:0.9}}
+                    />
+                    }),
+                            }}
                   />
                 </Drawer.Navigator>
             </NavigationContainer>

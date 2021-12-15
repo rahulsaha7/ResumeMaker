@@ -6,147 +6,109 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 import resumeThumb from './../assets/profile.png'
-
-
+import { ERContext } from '../ERContext';
+import axios from 'axios';
+import { HOST } from './config';
+import ActivityLoading from './ActivityLoading';
 export default class ChooseTemplate extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             checkid:0
+             checkid:0,
+             templates:[],
+             showLoading:true,
         }
     }
+
+    componentDidMount(){
+        this._fetchTemplates();
+    }
+
+
+    _fetchTemplates = async() => {
+
+        if(this.context.isConnected){
+            console.log(this.context.token);
+            try{
+                const response = await axios.post(HOST + '/template',{},{
+                    headers:{
+                        "Authorization":this.context.token,
+                    }
+                });
+
+                if(response.status === 200){
+                    console.log(response.data);
+                    if(response.data.success === true){
+                        console.log('---------------------resumes----------------');
+                        console.log(response.data.data);
+                        this.setState({templates:response.data.data});
+                    }else{
+                        alert('Someting went wrong! Please restart the app');
+                    }
+                }else{
+                    alert('401');
+                }
     
+            }catch(error){
+                console.log(error);
+            }
+        }else{
+            alert('no network');
+        }
+
+        this.setState({showLoading:false});
+        
+    }
+
+    _onSubmit = ()=>{
+        let resumeData = {...this.props.route.params.resumeData};
+        resumeData.templateid = this.state.checkid;
+        let templateData={
+            templateData: resumeData
+        }
+        this.props.navigation.push('Preview',{
+            templateData:templateData
+        });
+    }
+
+
     render() {
         let {checkid}  = this.state;
         console.log('resuem data printing');
         console.log(this.props.route.params.resumeData);
+        if(this.state.showLoading)
+            return <ActivityLoading msg="Loading Templates"/>
+        else
         return (
             <>
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:1})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===1?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
+
+                {
+                    this.state.templates.map((template,index)=>{
+                
+                    return  <View style={styles.imageContainer} key={index}>
+                                <Pressable
+                                    onPress={()=>this.setState({checkid:template.id})}
+                                >
+                                    <Image source={{uri:template.thumbnail}} style={styles.image} resizeMode="contain"/>
+                                </Pressable>
+                                {checkid===template.id?
+                                    <View style={styles.checkbox}>
+                                        <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
+                                    </View>
+                                    :
+                                    null
+                                }
                             </View>
-                            :
-                            null
-                        }
-                    </View>
+                    })
+                }
 
 
 
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:2})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===2?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
 
 
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:8})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===8?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
-
-
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:3})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===3?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
-
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:4})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===4?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
-
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:5})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===5?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:6})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===6?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
-
-                    <View style={styles.imageContainer}>
-                        <Pressable
-                            onPress={()=>this.setState({checkid:7})}
-                        >
-                            <Image source={require('./../assets/resume.png')} style={styles.image} resizeMode="contain"/>
-                        </Pressable>
-                        {checkid===7?
-                            <View style={styles.checkbox}>
-                                <MaterialCommunityIcons name="check-circle" size={40} color="#92B2FD"/>
-                            </View>
-                            :
-                            null
-                        }
-                    </View>
 
 
                 </View>
@@ -157,7 +119,7 @@ export default class ChooseTemplate extends Component {
                         colors={['rgba(173,127,251,1)','rgba(146,178,253,1)']}
                         end={{x:0.9,y:0.9}}
                         >
-                            <Button style={styles.nextButton} labelStyle={styles.nextButtonText} mode="text" color="#ffffff" onPress={()=>{this.props.navigation.push('Preview',{ResumeId:checkid})}}>
+                            <Button style={styles.nextButton} labelStyle={styles.nextButtonText} mode="text" color="#ffffff" onPress={this._onSubmit}>
                                 Preview
                             </Button>
                     </LinearGradient>
@@ -187,8 +149,8 @@ const styles = StyleSheet.create({
     },
     image:{
         borderRadius: 5,
-        width:'100%',
-        height:'100%'
+        width: '100%',
+        height:200
     },
     checkbox:{
         position:'absolute',
@@ -212,3 +174,6 @@ const styles = StyleSheet.create({
         fontSize:20
     }
 })
+
+
+ChooseTemplate.contextType = ERContext;

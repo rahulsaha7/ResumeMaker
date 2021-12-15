@@ -11,18 +11,20 @@ export class ResumeCard extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.imageWrapper}>
-                    <Image styele={styles.cardImage} source={this.props.photo?this.props.photo:require('./../assets/resumeProfile.png')}/>
+                    <Image style={styles.cardImage} source={this.props.image?{uri:this.props.image}:require('./../assets/resumeProfile.png')}/>
                 </View>
                 <View style={styles.details}>
                     <Text style={styles.name}>{this.props.name?this.props.name:""}</Text>
                     <Text style={styles.email}>{this.props.email?this.props.email:""}</Text>
                 </View>
+
+                {/*
                 <Pressable
                     style={styles.actionButton}
                     onPress={() => console.log('Pressed')}
                 >
                     <MCIcons name="dots-vertical" size={25}/>
-                </Pressable>
+                </Pressable>*/}
             </View>
         )
     }
@@ -43,11 +45,11 @@ const styles = StyleSheet.create({
     },
     imageWrapper:{
         width: '20%',
-        backgroundColor:'#dddddd',
-        borderRadius: 50,
     },
     cardImage:{
-        marginTop: 24,
+        height:50,
+        width:50,
+        borderRadius:50,
     },
     details:{
         width: '80%',

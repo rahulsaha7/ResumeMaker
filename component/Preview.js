@@ -6,37 +6,123 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-//import * as Permissions from 'expo-permissions'
-
-const images = [{
-    // Simplest usage.
-    //url: 'https://blog.hubspot.com/hs-fs/hubfs/Resume%20Template%201.jpg?width=1500&name=Resume%20Template%201.jpg',
-    url: 'https://cdn.buttercms.com/l14mPCbrSE2sguvz0rKV',
-    // width: number
-    // height: number
-    // Optional, if you know the image size, you can set the optimization performance
- 
-    // You can pass props to <Image />.
-    props: {
-        // headers: ...
-    }
-}];
-
+import { ERContext } from '../ERContext';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import axios from 'axios';
+import ActivityLoading from './ActivityLoading';
+import { HOST, LoaderPng } from './config';
+import ResumePlaceholder from './../assets/resumePlaceholder.png'
 class Preview extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
+             showLoading:true,
              preview:false,
              showSnackbar:false,
              snackbarText:'',
-             resumeLink:'http://www.africau.edu/images/default/sample.pdf'
+             resumeLink:null,
+             resumeImage:null,
+             images:[],
+
+             showAlert: false,
+             showModalProgress:false,
+             modalTitle:'',
+             modalMessage:'',
+             closeOnTouchOutside:false,
+             showConfirmButton:false,
+             confirmText:'',
+             onConfirmPressed:()=>this.hideAlert(),
         }
     }
+    componentDidMount (){
+        this.loadResumeData();
+    }
+
+    loadResumeData = ()=>{
+        if(this.props.route.params.resume){
+            //alert('already generated');
+            let tempImages = [...this.state.images,{url:this.props.route.params.resume.r_thumbnail}];
+            this.setState({
+                showLoading:false,
+                resumeLink: this.props.route.params.resume.r_location,
+                resumeImage: this.props.route.params.resume.r_thumbnail,
+                images:tempImages
+            })
+        }else{
+            this.generatePdf();
+        }
+    }
+
+    hideAlert = () =>{
+        this.setState({showAlert:false});
+    }
+
+    generatePdf = async()=>{
+        console.log('-----------------------------------------------generate pdf---');
+        //console.log(this.props.route.params.templateData);
+        if(this.context.isConnected){
+            try{
+
+                const response = await axios.post(HOST+'/generate',this.props.route.params.templateData,{
+                    headers:{
+                        "Authorization":this.context.token,
+                    }
+                });
+                console.log(response);
+                if(response.status === 200){
+                    if(response.data.success === true){
+
+                        //pdf generated successfully
+                        let tempImages = [...this.state.images,{url:response.data.thumbnail}];
+                        this.setState({
+                            resumeLink:response.data.data,
+                            resumeImage:response.data.thumbnail,
+                            images:tempImages
+                        })
+                        console.log(response.data.data);
+                    }else{
+                        //failed to generate pdf
+                        this.setState({
+                            showAlert: true,
+                            showModalProgress:false,
+                            modalTitle:"Failed to generate",
+                            modalMessage: '',
+                            closeOnTouchOutside: true,
+                        });
+                        this.props.navigation.goBack();
+                    }
+
+                }else{
+                    //request status is not  200
+                    this.setState({
+                        showAlert: true,
+                        showModalProgress:false,
+                        modalTitle:"Server error",
+                        modalMessage: "Something went wrong in the server",
+                        closeOnTouchOutside: true,
+                    });
+                }
+            }catch(error){
+                console.log(error);
+            }
+        }else{
+            //if network is not connected
+            this.setState({
+                showAlert: true,
+                showModalProgress:false,
+                modalTitle:"Ooops !",
+                modalMessage:"No Internet Connection found\n Check your connection",
+                closeOnTouchOutside: true,
+            });
+        }
+        this.setState({showLoading:false})
+    }
+
     onShare = async () => {
         try {
           const result = await Share.share({
-            message: 'Hey, I create a resume using Resume Maker, check it here '+this.state.resumeLink,
+            message: 'Hey, I create a resume using Easy Resume Maker, check it here '+this.state.resumeLink,
           });
           if (result.action === Share.sharedAction) {
             if (result.activityType) {
@@ -59,8 +145,8 @@ class Preview extends Component {
             snackbarText: 'Download has started'
         });
 
-        const uri = "http://www.africau.edu/images/default/sample.pdf"
-        let fileUri = FileSystem.documentDirectory + "sample.pdf";
+        const uri = this.state.resumeLink;
+        let fileUri = FileSystem.documentDirectory + this.context.name+"_EasyResume.pdf";
         console.log(fileUri);
         FileSystem.downloadAsync(uri, fileUri)
         .then(({ uri }) => {
@@ -76,6 +162,7 @@ class Preview extends Component {
             MediaLibrary.requestPermissionsAsync();
             const asset = await MediaLibrary.createAssetAsync(fileUri);
             let data = await MediaLibrary.createAlbumAsync("EasyResume", asset, false);
+
             this.setState({
                 showSnackbar:true,
                 snackbarText: 'Download completed. Saved in Picture/EasyResume'
@@ -85,9 +172,20 @@ class Preview extends Component {
         }
     }
     render() {
+        const {showAlert,
+            showModalProgress,
+            modalTitle,
+            modalMessage,
+            closeOnTouchOutside,showConfirmButton,
+            confirmText,
+            onConfirmPressed} = this.state;
         const {colors} = this.props.theme;
-        console.log(this.props.route.params.ResumeId);
+
+        console.log(this.props.route.params.templateData);
         const {showSnackbar, snackbarText} = this.state;
+        if(this.state.showLoading)
+            return <ActivityLoading msg ="Generating Resume"/>
+        else
         return (
             <>
             <View style={styles.container}>
@@ -95,7 +193,12 @@ class Preview extends Component {
                     <Pressable
                         onPress={()=>{this.setState({preview:true})}}
                     >
-                        <Image style={styles.resumeImage} resizeMode="contain" source={require('./../assets/resume.png')}/>
+                        {
+                            this.state.resumeImage?
+                                <Image style={styles.resumeImage} resizeMode="contain" source={{uri:this.state.resumeImage}} loadingIndicatorSource={{uri:LoaderPng}}/>
+                            :
+                                <Image style={styles.resumeImage} resizeMode="contain" source={ResumePlaceholder}/>
+                        }
                     </Pressable>
                 </View>
 
@@ -124,7 +227,7 @@ class Preview extends Component {
             </View>
             <Modal visible={this.state.preview} transparent={true}>
                 <ImageViewer
-                imageUrls={images}
+                imageUrls={this.state.images}
                 enableSwipeDown={true}
                 onSwipeDown={()=>{this.setState({preview:false})}}
                 onCancel={()=>{this.setState({preview:false})}}
@@ -155,12 +258,38 @@ class Preview extends Component {
                 }}>
                 {snackbarText}
             </Snackbar>
+            <AwesomeAlert
+                        show={showAlert}
+                        showProgress={showModalProgress}
+                        progressColor="#ff00ff"
+                        title={modalTitle}
+                        message={modalMessage}
+                        closeOnTouchOutside={closeOnTouchOutside}
+                        closeOnHardwareBackPress={false}
+                        showCancelButton={false}
+                        showConfirmButton={showConfirmButton}
+                        cancelText="No, cancel"
+                        confirmText="Yes, delete it"
+                        confirmButtonColor="#92B2FD"
+                        confirmText={confirmText}
+                        onDismiss = {()=>{
+                            this.setState({showAlert:false})
+                        }}
+                        onCancelPressed={() => {
+                            this.hideAlert();
+                        }}
+                        onConfirmPressed={onConfirmPressed}
+                        actionContainerStyle={{}}
+                        confirmButtonStyle={styles.confirmButtonContainer}
+                        confirmButtonTextStyle={styles.buttonText}
+                        />
             </>
         )
     }
 }
 
-export default withTheme(Preview)
+Preview.contextType = ERContext;
+export default  withTheme(Preview)
 
 const styles = StyleSheet.create({
     container:{
@@ -173,6 +302,7 @@ const styles = StyleSheet.create({
     },
     resumeImage:{
         height: 400,
+        width:300,
         borderRadius:5
     },
     ButtonContainer:{

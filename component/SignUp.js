@@ -11,7 +11,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import axios from 'axios';
 import qs from 'qs'
 import { ERContext } from '../ERContext';
-
+import {HOST} from './config'
 
 class SignUp extends ValidationComponent {
     constructor(props) {
@@ -130,7 +130,7 @@ class SignUp extends ValidationComponent {
                             password: this.state.password
                     }
                     console.log(params);
-                    const response = await axios.post('https://drkeasyresume.herokuapp.com/index.php/signUp',qs.stringify(params));
+                    const response = await axios.post(HOST+'/signUp',qs.stringify(params));
                     console.log(response);
                     if(response.status === 200){
                         if(response.data.data === true){

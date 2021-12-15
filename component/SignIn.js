@@ -9,8 +9,10 @@ import ValidationComponent from 'react-native-form-validator';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import axios from 'axios';
 import qs from 'qs'
+import jwt_decode from "jwt-decode";
 
 import { ERContext } from '../ERContext';
+import { HOST } from './config'
 
 class SignIn extends ValidationComponent {
     constructor(props) {
@@ -92,7 +94,7 @@ class SignIn extends ValidationComponent {
                             password: this.state.password
                     }
                     console.log(params);
-                    const response = await axios.post('https://drkeasyresume.herokuapp.com/index.php/login',qs.stringify(params));
+                    const response = await axios.post(HOST + '/login',qs.stringify(params));
                     console.log(response);
                     if(response.status === 200){
                         if(response.data.login === true){
@@ -100,6 +102,11 @@ class SignIn extends ValidationComponent {
                             if(response.data.token){
                                 this.context.changeState('token',response.data.token);
                                 this.context.storeData('token',response.data.token);
+
+                                let decoded = jwt_decode(response.data.token);
+                                this.context.changeState('name',decoded.name);
+                                this.context.changeState('email',decoded.username);
+                                this.context.changeState('appUrl',decoded.url);
                                 this.context.changeState('isLoggedIn',true);
                             }else{
                                 alert('Someting went wrong! Please restart the app');

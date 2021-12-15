@@ -28,7 +28,8 @@ export default class OnboardingScreen extends Component {
                     end={{x:0.9,y:0.9}}
                 />
               <Onboarding
-                  onSkip={()=>{this.hideOnBoardingScreen()}}
+                  onSkip={()=>{this.hideOnBoardingScreen();this.props.onClickStart();}}
+                  showSkip={true}
                   onDone={()=>{this.hideOnBoardingScreen()}}
                   bottomBarColor="transparent"
                   bottomBarHeight={65}
