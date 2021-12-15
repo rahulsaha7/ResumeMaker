@@ -78,7 +78,72 @@ export default class ProfileDetails extends Component {
 
     }
 
-
+    resetState = (stateName)=>{
+        switch(stateName){
+            case 'education':this.setState({
+                                        education:{
+                                            instituteName:'',
+                                            degreeTitle:'',
+                                            startYear:'',
+                                            endYear:'',
+                                            tillPresent:true,
+                                            cgpa:'',
+                                            summary:''
+                                            },
+                                    });
+                break;
+            case 'experience':this.setState({
+                            experience:{
+                                companyName:'',
+                                jobTitle:'',
+                                startDate:'',
+                                endDate:'',
+                                tillPresent:true,
+                                summary:''
+                                }
+                            });
+                break;
+            case 'projects':this.setState({
+                                projects:{
+                                    projectName:'KS Tech Pvt Limited',
+                                    projectDescription:'Software Engineer',
+                                    startDate:'5/2020',
+                                    endDate:'5/2022',
+                                    tillPresent:true,
+                                    summary:'this is summary'
+                                    }
+                                });
+                  break;
+            case 'skills':this.setState({
+                            skills:{
+                                skillName:'',
+                                skillLevel:'',
+                            }
+                        });
+                break;
+            case 'languages':this.setState({
+                                    languages:{
+                                        languageName:'',
+                                    }
+                                    });
+                            break;
+            case 'hobbies':this.setState({
+                                    hobbies:{
+                                        hobbyName:'',
+                                    }
+                                });
+                            break;
+            case 'custom':this.setState({
+                        custom:{
+                            title:'',
+                            sub_title:'',
+                            description:'',
+                        }
+                    });
+                break;
+            
+        }
+    }
     pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -135,6 +200,8 @@ export default class ProfileDetails extends Component {
         resume_data[sectionName] = edu_arr;
         this.setState({
             resumeData: resume_data,
+        },()=>{
+            this.resetState(stateName);
         });
         //this.context.changeState('resumeData',resume_data);
     }
@@ -144,13 +211,14 @@ export default class ProfileDetails extends Component {
         // before submitting add profile data to resumeData
         let sectionName='profile';
         let stateName='profile';
-        let profile  = [...this.state.resumeData[sectionName],this.state[stateName]]
+        let profile  = [this.state[stateName]];
         let resume_data = {...this.state.resumeData};
         resume_data[sectionName] = profile;
         this.setState({
             resumeData: resume_data,
         },()=>{
-            this.props.navigation.push('ChooseTemplate',{resumeData:this.state.resumeData});
+            console.log(resume_data);
+            this.props.navigation.push('ChooseTemplate',{resumeData:resume_data});
         });
     }
 

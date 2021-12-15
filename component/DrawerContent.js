@@ -12,17 +12,7 @@ import {
 import ProfileImg from './../assets/profile.png'
 
 
-async function signOut(){
-    try {
-        await AsyncStorage.removeItem('token',()=>{
-            const ERContext = useERContext();
-            ERContext.changeState('isLoggedIn',false);
-        });
 
-      } catch(e) {
-        console.log(e);
-      }
-}
 class DrawerContent extends React.Component{
     _signOut = async()=>{
         try {

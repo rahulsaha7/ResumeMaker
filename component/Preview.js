@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, Pressable,Modal,Share,Alert,ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable,Modal,Share,Alert,ActivityIndicator,BackHandler } from 'react-native'
 import { withTheme, Button,Snackbar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -24,6 +24,7 @@ class Preview extends Component {
              resumeLink:null,
              resumeImage:null,
              images:[],
+             oldResume:false,
 
              showAlert: false,
              showModalProgress:false,
@@ -36,12 +37,14 @@ class Preview extends Component {
         }
     }
     componentDidMount (){
+
         this.loadResumeData();
     }
 
     loadResumeData = ()=>{
         if(this.props.route.params.resume){
             //alert('already generated');
+
             let tempImages = [...this.state.images,{url:this.props.route.params.resume.r_thumbnail}];
             this.setState({
                 showLoading:false,
@@ -60,7 +63,7 @@ class Preview extends Component {
 
     generatePdf = async()=>{
         console.log('-----------------------------------------------generate pdf---');
-        //console.log(this.props.route.params.templateData);
+        console.log(this.props.route.params.templateData);
         if(this.context.isConnected){
             try{
 
