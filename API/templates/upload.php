@@ -17,7 +17,7 @@
 
 
 
-            $env = 'lv';
+            $env = 'lvs';
             if ($env == 'lv') {
                 $conn = new PDO("mysql:host=localhost;dbname=maldanat_downtimealert", 'maldanat_easyresume', 'easyresume');
             } else {

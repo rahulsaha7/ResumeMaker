@@ -1,7 +1,7 @@
 <?php
 
 
-$env2 = 'lv';
+$env2 = 'development';
 
 if ($env2 == 'development') {
 

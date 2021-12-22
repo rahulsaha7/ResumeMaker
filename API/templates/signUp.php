@@ -94,7 +94,8 @@ class Signup
                     'exp'  => $this->expire,
                     'userId' => $this->values[0],
                     'name' => $this->values[1],
-                    'username' => $this->values[2]
+                    'username' => $this->values[2],
+                    'url' => 'https://www.maldanattyasena.com'
                 );
                 $this->jwt = JWT::encode($this->payload, $this->secretCode, 'HS256');
             } else {

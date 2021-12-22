@@ -217,14 +217,25 @@
       <div class="cover shadow-lg bg-white">
         <div class="cover-bg p-3 p-lg-4 text-white">
           <div class="d-flex flex-column">
-            <div class="col-lg-4 col-md-5 w-30">
-              <div class="avatar hover-effect bg-white shadow-sm p-1"><img src=<?php echo  $personal[0]['image'] ?> width="200" height="200" /></div>
-            </div>
+            <table style="width:400px">
 
-            <div class="col-lg-8 col-md-7 text-center text-md-start">
-              <h1 class="site-title mb-0"><?php echo $name ?></h1>
+              <tr>
+                <td style="width: 50%;">
 
-            </div>
+                  <div class="col-lg-4 col-md-5 w-30">
+                    <div class="avatar hover-effect bg-white shadow-sm p-1"><img src=<?php echo  $personal[0]['image'] ?> width="200" height="200" /></div>
+                  </div>
+                </td>
+                <td style="width:50%">
+                  <div class="col-lg-8 col-md-7 text-center text-md-start">
+                    <h1 class="site-title mb-0"><?php echo $name ?></h1>
+
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+
           </div>
         </div>
         <div class="about-section pt-4 px-3 px-lg-4 mt-1">
@@ -253,67 +264,52 @@
             </div>
           </div>
         </div>
-        <!-- <hr class="d-print-none" /> -->
-        <div class="skills-section px-3 px-lg-4">
+        <hr class="d-print-none" />
+        <div class="skills-section">
           <h2 class="h3 mb-3">Skills</h2>
-          <div class="row">
-            <div class="col-md-6">
-              <?php foreach ($skills as $value) {
+          <table>
 
-              ?>
-                <div class="mb-2"><span><?php echo $value['s_name']; ?></span>
-                  <div class="progress my-1">
-                    <span> <?php echo $value['s_level']; ?> </span>
-                  </div>
-                </div>
-              <?php }
+            <div class="">
+              <tr>
+                <?php foreach ($skills as $value) {
 
-              ?>
+                ?>
+
+                  <td class="pe-3">
+                    <div class="mb-2"><span><?php echo $value['s_name']; ?></span>
+                      <div class="progress my-1">
+                        <span> <?php echo $value['s_level']; ?> </span>
+                      </div>
+                    </div>
+                  </td>
 
 
+                <?php }
+
+                ?>
+
+              </tr>
 
             </div>
-          </div>
-        </div>
-        <!-- <hr class="d-print-none" /> -->
-        <div class="work-experience-section px-3 px-lg-4">
-          <h2 class="h3 mb-4">Experience</h2>
-          <div class="timeline">
-            <?php foreach ($exp as $value) { ?>
-              <div class="timeline-card timeline-card-primary card shadow-sm">
-                <div class="card-body">
-                  <div class="h5 mb-1"><?php echo $value['j_title']; ?><span class="text-muted h6">at <?php echo $value['c_name']; ?></span></div>
-                  <div class="text-muted text-small mb-2"><?php
-                                                          if ($value['present']) {
-                                                            echo $value['s_year'] . "-" . "present";
-                                                          } else {
-                                                            echo $value['s_year'] . "-" . $value['e_year'];
-                                                          }
-                                                          ?></div>
-                  <div>
-                    <p class="summary">
-                      <?php echo $value['responsibility']; ?>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            <?php
-            }
-            ?>
 
 
-          </div>
+          </table>
+          <!-- <div class="row">
+          </div> -->
         </div>
         <hr class="d-print-none" />
-        <!-- <div class="page-break"></div> -->
-        <div class="education-section px-3 px-lg-4 pb-4">
-          <h2 class="h3 mb-4">Education</h2>
+
+
+        <div class="education-section px-2 px-lg-4">
+          <h2 class="h1">Education</h2>
           <div class="timeline">
             <?php foreach ($edu as $value) {
             ?>
+
               <div class="timeline-card timeline-card-success card shadow-sm">
                 <div class="card-body">
-                  <div class="h5 mb-1"><?php print $value['d_title'] ?><span class="text-muted h6">from <?php echo $value['i_name']; ?></span></div>
+                  <div class="mb-1"><?php print $value['d_title'] ?></div>
+                  <span class="text-muted h6">from <?php echo $value['i_name']; ?></span>
                   <div class="text-muted text-small mb-2"><?php
                                                           if ($value['present']) {
                                                             echo $value['s_year'] . "-" . "present";
@@ -324,13 +320,147 @@
                   <!-- <div></div> -->
                 </div>
               </div>
+
             <?php
             }
             ?>
 
           </div>
         </div>
-        <!-- <hr class="d-print-none" /> -->
+        <hr class="d-print-none" />
+        <table style="width: 600px;">
+
+          <tr class="timeline">
+
+            <td class="timeline-card timeline-card-success card shadow-sm" style="width: 50%; padding-left:10px">
+              <div class="work-experience-section px-2 mx-2 px-lg-4">
+                <h1 class="h1">Experience</h1>
+                <div class="timeline">
+                  <?php foreach ($exp as $value) { ?>
+
+                    <div class="ps-2 pl-2">
+                      <div class="card-body">
+                        <div class="mb-1"><?php echo $value['j_title']; ?></div>
+                        <span class="text-muted h6"> <?php echo $value['c_name']; ?></span>
+                        <div class="text-muted text-small mb-2"><?php
+                                                                if ($value['present']) {
+                                                                  echo $value['s_year'] . "-" . "present";
+                                                                } else {
+                                                                  echo $value['s_year'] . "-" . $value['e_year'];
+                                                                }
+                                                                ?></div>
+                        <div>
+                          <p class="summary">
+                            <?php echo $value['responsibility']; ?>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              <?php
+                  }
+              ?>
+              </div>
+
+
+
+
+            </td>
+
+            <td class="timeline-card timeline-card-success card shadow-sm" style="width: 50%;">
+
+              <div class="work-experience-section px-2 px-lg-4">
+                <h1 class="h1">Projects</h1>
+                <div class="timeline">
+                  <?php foreach ($pro as $value) { ?>
+
+                    <div class="">
+                      <div class="card-body">
+                        <h3 class="mb-1"><?php echo $value['p_name']; ?></h3>
+                        <span class="text-muted h6"> <?php echo $value['p_title']; ?></span>
+                        <div class="text-muted text-small mb-2"><?php
+                                                                if ($value['present']) {
+                                                                  echo $value['s_year'] . "-" . "present";
+                                                                } else {
+                                                                  echo $value['s_year'] . "-" . $value['e_year'];
+                                                                }
+                                                                ?></div>
+                        <div>
+                          <p class="summary">
+                            <?php echo $value['pr_summery']; ?>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              <?php
+                  }
+              ?>
+              </div>
+
+            </td>
+
+          </tr>
+
+        </table>
+
+        <hr class="d-print-none" />
+
+        <table style="width: 600px;">
+
+          <tr class="timeline">
+
+            <td class="timeline-card timeline-card-success card shadow-sm" style="width: 50%; padding-left:10px">
+              <div class="work-experience-section px-2 mx-2 px-lg-4">
+                <h1 class="h1">Language</h1>
+                <div class="timeline">
+                  <?php foreach ($lan as $value) { ?>
+
+                    <div class="ps-2 pl-2">
+                      <div class="card-body">
+                        <h3 class="mb-1"><?php echo $value['l_name']; ?>
+                        </h3>
+
+
+                      </div>
+                    </div>
+                </div>
+              <?php
+                  }
+              ?>
+              </div>
+
+
+
+
+            </td>
+
+            <td class="timeline-card timeline-card-success card shadow-sm" style="width: 50%;">
+
+              <div class="work-experience-section px-2 px-lg-4">
+                <h1 class="h1">Hobby</h1>
+                <div class="timeline">
+                  <?php foreach ($hob as $value) { ?>
+
+                    <div class="">
+                      <div class="card-body">
+                        <h3 class="mb-1"><?php echo $value['h_name']; ?></h3>
+
+                      </div>
+                    </div>
+                </div>
+              <?php
+                  }
+              ?>
+              </div>
+
+            </td>
+
+          </tr>
+
+        </table>
+
+
 
       </div>
     </div>

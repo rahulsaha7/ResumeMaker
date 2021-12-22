@@ -323,6 +323,28 @@ class generate
 
             $skills = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
 
+            $sql = "SELECT * from resume r,Projects s  where r.resumeNo = s.resumeNo and r.resumeNo = $this->resumeNo";
+            $this->db->query($sql);
+
+
+            $pro = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+            $sql = "SELECT * from resume r,Languages s  where r.resumeNo = s.resumeNo and r.resumeNo = $this->resumeNo";
+            $this->db->query($sql);
+
+
+            $lan = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+            $sql = "SELECT * from resume r,Hobby s  where r.resumeNo = s.resumeNo and r.resumeNo = $this->resumeNo";
+            $this->db->query($sql);
+
+
+            $hob = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+
 
 
 
@@ -332,11 +354,11 @@ class generate
             $summery = $personal[0]['PSummery'];
             $img = file_get_contents('./uploads/template1/images/avatar.jpg');
 
-            // Encode the image string data into base64
+
             $data = base64_encode($img);
-            // echo $data;
-            // exit();
+
             ob_start();
+
 
 
             include './' . $this->t_location;
@@ -363,7 +385,7 @@ class generate
 
             $this->thumbnaillink = BASE_URL . '/thumbnails/' . $this->resumeNo . ".png";
 
-            $sql = "UPDATE `resume` SET `r_location` = '$this->data',`r_thumbnail` = '$this->thumbnaillink'  WHERE `resume`.`resumeNo` = $this->resumeNo";
+            $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
 
             $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {
@@ -378,11 +400,6 @@ class generate
     }
 
 
-    //     192.168.0.100
-    // Username:
-    // rahulsah_mad
-    // Password:
-    // Rahul1234@
 
 
     private function getTemplateFile()

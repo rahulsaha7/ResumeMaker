@@ -83,7 +83,9 @@ class login
                     'exp'  => $this->expire,
                     'userId' => $this->result[0]['userID'],
                     'name' => $this->result[0]['name'],
-                    'username' => $this->result[0]['email']
+                    'username' => $this->result[0]['email'],
+                    'url' => 'https://www.maldanattyasena.com'
+
                 );
                 $this->jwt = JWT::encode($this->payload, $this->secretCode, 'HS256');
             } else {

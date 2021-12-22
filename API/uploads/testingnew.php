@@ -217,14 +217,24 @@
       <div class="cover shadow-lg bg-white">
         <div class="cover-bg p-3 p-lg-4 text-white">
           <div class="d-flex flex-column">
-            <div class="col-lg-4 col-md-5 w-30">
-              <div class="avatar hover-effect bg-white shadow-sm p-1"><img src=<?php echo  $personal[0]['image'] ?> width="200" height="200" /></div>
-            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
 
-            <div class="col-lg-8 col-md-7 text-center text-md-start">
-              <h1 class="site-title mb-0"><?php echo $name ?></h1>
+                    <div class="col-lg-4 col-md-5 w-30">
+                      <div class="avatar hover-effect bg-white shadow-sm p-1"><img src=<?php echo  $personal[0]['image'] ?> width="200" height="200" /></div>
+                    </div>
 
-            </div>
+                    <div class="col-lg-8 col-md-7 text-center text-md-start">
+                      <h1 class="site-title mb-0"><?php echo $name ?></h1>
+
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
         </div>
         <div class="about-section pt-4 px-3 px-lg-4 mt-1">

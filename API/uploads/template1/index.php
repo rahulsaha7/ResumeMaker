@@ -223,25 +223,16 @@
 
             <div class="col-lg-8 col-md-7 text-center text-md-start">
               <h1 class="site-title mb-0"><?php echo $name ?></h1>
-              <p data-aos="fade-left" data-aos-delay="100">Graphic Designer & Web Developer</p>
-              <!-- <div class="d-print-none" data-aos="fade-left" data-aos-delay="200"><a class="btn btn-light text-dark shadow-sm mt-1 me-1" href="right-resume.pdf" target="_blank">Download CV</a><a class="btn btn-success shadow-sm mt-1" href="#contact">Hire Me</a></div> -->
+
             </div>
           </div>
         </div>
         <div class="about-section pt-4 px-3 px-lg-4 mt-1">
           <div class="row">
-            <div class="col-md-6">
-              <h2 class="h3 mb-3">About Me</h2>
-              <p><?php echo $summery ?></p>
-            </div>
+
             <div class="col-md-5 offset-md-1">
               <div class="row mt-2">
-                <!-- <div class="col-sm-4">
-                  <div class="pb-1">Age</div>
-                </div>
-                <div class="col-sm-8">
-                  <div class="pb-1 text-secondary">28</div>
-                </div> -->
+
                 <div class="col-sm-4">
                   <div class="pb-1"><?php echo $email ?></div>
                 </div>
@@ -252,26 +243,27 @@
                 <div class="col-sm-8">
                   <div class="pb-1 text-secondary"><?php echo $personal[0]['phone'] ?></div>
                 </div>
-                <!-- <div class="col-sm-4">
-                  <div class="pb-1">Address</div>
-                </div> -->
-                <!-- <div class="col-sm-8">
-                  <div class="pb-1 text-secondary">140, City Center, New York, U.S.A</div>
-                </div> -->
+
+                <div class="col-md-6">
+                  <h2 class="h3 ">About Me</h2>
+                  <p><?php echo $summery ?></p>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
         <hr class="d-print-none" />
         <div class="skills-section px-3 px-lg-4">
-          <h2 class="h3 mb-3">Professional Skills</h2>
+          <h2 class="h3 mb-3">Skills</h2>
           <div class="row">
             <div class="col-md-6">
               <?php foreach ($skills as $value) {
+
               ?>
                 <div class="mb-2"><span><?php echo $value['s_name']; ?></span>
                   <div class="progress my-1">
-                    <div class="progress-bar bg-primary" role="progressbar" data-aos="zoom-in-right" data-aos-delay="100" data-aos-anchor=".skills-section" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                    <span> <?php echo $value['s_level']; ?> </span>
                   </div>
                 </div>
               <?php }
@@ -285,7 +277,7 @@
         </div>
         <hr class="d-print-none" />
         <div class="work-experience-section px-3 px-lg-4">
-          <h2 class="h3 mb-4">Work Experience</h2>
+          <h2 class="h3 mb-4">Experience</h2>
           <div class="timeline">
             <?php foreach ($exp as $value) { ?>
               <div class="timeline-card timeline-card-primary card shadow-sm">
@@ -298,17 +290,22 @@
                                                             echo $value['s_year'] . "-" . $value['e_year'];
                                                           }
                                                           ?></div>
-                  <div></div>
+                  <div>
+                    <p class="summary">
+                      <?php echo $value['responsibility']; ?>
+                    </p>
+                  </div>
                 </div>
               </div>
             <?php
             }
             ?>
 
+
           </div>
         </div>
         <hr class="d-print-none" />
-        <div class="page-break"></div>
+        <!-- <div class="page-break"></div> -->
         <div class="education-section px-3 px-lg-4 pb-4">
           <h2 class="h3 mb-4">Education</h2>
           <div class="timeline">
@@ -316,7 +313,7 @@
             ?>
               <div class="timeline-card timeline-card-success card shadow-sm">
                 <div class="card-body">
-                  <div class="h5 mb-1"><?php echo $value['d_title'] ?><span class="text-muted h6">from <?php echo $value['i_name']; ?></span></div>
+                  <div class="h5 mb-1"><?php print $value['d_title'] ?><span class="text-muted h6">from <?php echo $value['i_name']; ?></span></div>
                   <div class="text-muted text-small mb-2"><?php
                                                           if ($value['present']) {
                                                             echo $value['s_year'] . "-" . "present";
@@ -324,7 +321,7 @@
                                                             echo $value['s_year'] . "-" . $value['e_year'];
                                                           }
                                                           ?></div>
-                  <div></div>
+                  <!-- <div></div> -->
                 </div>
               </div>
             <?php

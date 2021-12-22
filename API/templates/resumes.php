@@ -59,7 +59,7 @@ class resumes
             $result = $this->db->sql_query->fetchAll(PDO::FETCH_ASSOC);
             foreach ($result as $value) {
                 $resume = $value['resumeNo'];
-                $this->sql = "SELECT name,email,image,r.resumeNo from resume r,PersonalDetails p where r.resumeNo = p.resumeNo and  r.resumeNo = $resume";
+                $this->sql = "SELECT name,email,image,r.resumeNo,r.r_location,r.r_thumbnail from resume r,PersonalDetails p where r.resumeNo = p.resumeNo and  r.resumeNo = $resume";
                 $this->db->query($this->sql);
                 if ($this->db->sql_query->rowCount() > 0) {
 
