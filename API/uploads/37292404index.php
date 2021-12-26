@@ -30,7 +30,16 @@
                 color: white;
             }
 
-            span {
+            td,
+            th,
+            tr {
+
+                border: none;
+                border-collapse: collapse;
+                outline: none;
+            }
+
+            v span {
                 display: inline-block;
                 color: white;
             }
@@ -51,6 +60,7 @@
             }
 
             .profile-image-holder {
+                margin-top: 100px;
                 height: 200px;
                 width: 200px;
                 border-collapse: separate !important;
@@ -111,155 +121,27 @@
 
 <body>
 
-    <main class="container-fluid p-0 m-0">
-        <table>
 
-            <tbody>
-
-                <tr>
-                    <td class="rows h-100" height="100%">
-                        <figure class="profile-image-holder ps-3 pe-3">
-                            <img class="profile-image" src=<?php echo  $personal[0]['image'] ?> alt="profile picture">
-                        </figure>
-                        <h4 class="px-3">Contact</h3>
-
-
-                            <address class="address-holder ps-3 pe-3 mt-2">
-
-
-                                <div>
-                                    <i class="fas fa-phone-alt"></i>
-                                    <span class="ps-2"><?php echo $personal[0]['phone'] ?></span>
-                                </div>
-                                <div>
-                                    <i class="far fa-envelope"></i>
-                                    <span class="ps-2"><?php echo $email ?></span>
-                                </div>
-
-                            </address>
-
-                            <h4 class="mt-5 ps-3"> Education </h4>
-                            <section class="education-holder ps-3">
-                                <?php foreach ($edu as $value) {
-                                ?>
-                                    <div class="edus mt-3">
-                                        <h5><?php echo $value['d_title'] ?></h5>
-                                        <h6><?php
-                                            if ($value['present']) {
-                                                echo $value['s_year'] . "-" . "present";
-                                            } else {
-                                                echo $value['s_year'] . "-" . $value['e_year'];
-                                            }
-                                            ?></h6>
-                                        <span><?php echo $value['i_name']; ?></span>
-                                    </div>
-
-                                <?php
-
-                                }
-                                ?>
-
-
-                            </section>
-
-                            <section class="custom" style="visibility: hidden;">
-                                <?php foreach ($skills as $value) {
-                                ?>
-                                    <p>a</p>
-
-                                <?php
-                                }
-
-
-                                foreach ($skills as $value) {
-
-                                ?>
-                                    <p>a</p>
-                                <?php
-                                }
-                                ?>
-
-
-                            </section>
-
-                    </td>
-                    <td class="row2">
-                        <header class=" ps-3">
-                            <div class="container-fluid title-header ps-2">
-                                <section class="text-center pt-5">
-                                    <h1><?php echo $name ?></h1>
-                                </section>
+    <table width="100%" border="0" align="center" style="height:600px;">
 
 
 
-                            </div>
-
-                        </header>
-
-                        <main class="mt-3">
-                            <h4 class="experience profile ps-3">Profile</h4>
-                            <section class="summary ps-3">
-                                <p><?php echo $summery ?></p>
-                            </section>
-
-                            <h4 class="profile ps-3 pt-3">Experience</h4>
-                            <section class="summary ps-3">
-                                <?php foreach ($exp as $value) { ?>
-                                    <div class="pt-1">
-
-                                        <h6 class="position-name"><b> <?php echo $value['j_title']; ?></b></h6>
-                                        <span class="company-name float-left"><?php echo $value['c_name']; ?></span>
-                                        <span class="date" style="display:block;"> <?php
-                                                                                    if ($value['present']) {
-                                                                                        echo $value['s_year'] . "-" . "present";
-                                                                                    } else {
-                                                                                        echo $value['s_year'] . "-" . $value['e_year'];
-                                                                                    }
-                                                                                    ?></span>
-                                        <p class="summary">
-                                            <?php echo $value['responsibility']; ?>
-                                        </p>
-                                    </div>
-                                <?php
-                                }
-                                ?>
-
-                            </section>
-
-                            <h4 class="skills profile ps-3">Skills</h4>
-                            <section class="summary ps-3">
-                                <div class="pt-1">
-                                    <?php foreach ($skills as $value) {
-                                        $progress;
-                                        if ($value['s_level'] == 'intermediate') {
-                                            $progress = "60";
-                                        } else if ($value['s_level'] == 'advanced') {
-                                            $progress = "90";
-                                        } else {
-                                            $progress = "40";
-                                        }
-
-                                    ?>
-                                        <h6 class="position-name"><b> <?php echo $value['s_name']; ?></b></h6>
-                                        <progress id="file" value=<?php echo $progress ?> max="100">
-                                        </progress>
+        <tr>
+            <td class="rows" style="width: 30%;">
 
 
-                                    <?php
-                                    }
 
-                                    ?>
 
-                                </div>
-                            </section>
-                        </main>
+            </td>
+            <td class="row2" style="width: 70%;">
 
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            </td>
 
-    </main>
+        </tr>
+        </tbody>
+    </table>
+
+
 
     <script src="scripts/bootstrap.bundle.min.js?ver=1.2.0"></script>
     <script src="scripts/aos.js?ver=1.2.0"></script>

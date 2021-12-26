@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+
+body,td,th {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 12px;
+}
+body {
+ margin-left: 0px;
+ margin-top: 0px;
+ margin-right: 0px;
+ margin-bottom: 0px;
+ padding: 0px;
+}
+
+
+td,th,tr{
+    
+    border: none;
+    border-collapse: collapse;
+    outline: none;
+}
+.details td{
+    padding: 20px;
+}
+.profile{
+    background-color: #313C4E;
+}
+.profile td{
+    padding: 30px;
+}
+.profile img{
+    border-radius: 50%;
+}
+.name{
+    font-size: 25px;
+}
+.text-white{
+    color:#ddd; 
+}
+.bor-bottom{
+    border-bottom: 2px solid #449399;
+}
+.text-blue{
+    color: #449399;
+}
+.text-black,.skill{
+    color: #444;
+}
+ .left,.right{
+    vertical-align:top;
+ }

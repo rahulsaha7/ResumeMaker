@@ -17,7 +17,7 @@
 
 
 
-            $env = 'lvs';
+            $env = 'lv';
             if ($env == 'lv') {
                 $conn = new PDO("mysql:host=localhost;dbname=maldanat_downtimealert", 'maldanat_easyresume', 'easyresume');
             } else {
@@ -62,7 +62,7 @@
                     $folder1 = "uploads/" . $generate . $template_name;
                     if (move_uploaded_file($temp_thumbnail_name, $test2)) {
                         chmod($test1, 0777);
-                        $folder2 = "https://www.maldanattyasena.xyz/uploads/" . $generate . $thumbnail_name;
+                        $folder2 = "https://www.rahulsaha.live/uploads/" . $generate . $thumbnail_name;
 
                         //Upload that documents to database
                         //$db = new database();

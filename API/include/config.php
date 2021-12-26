@@ -1,7 +1,7 @@
 <?php
 
 
-$env2 = 'development';
+$env2 = 'developments';
 
 if ($env2 == 'development') {
 
@@ -14,7 +14,7 @@ if ($env2 == 'development') {
     defined('DB_PASS') ? NULL : define('DB_PASS', 'Rahul@7242');
     defined('DB_NAME') ? NULL : define('DB_NAME', 'MAD');
 } else {
-    defined('BASE_URL') ? NULL : define('BASE_URL', 'https://www.maldanattyasena.xyz');
+    defined('BASE_URL') ? NULL : define('BASE_URL', 'https://www.rahulsaha.live');
     defined('DB_HOST') ? NULL : define('DB_HOST', 'localhost');
     defined('DB_USER') ? NULL : define('DB_USER', 'maldanat_easyresume');
     defined('DB_PASS') ? NULL : define('DB_PASS', 'easyresume');
