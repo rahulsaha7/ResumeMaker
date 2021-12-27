@@ -62,7 +62,7 @@
                     $folder1 = "uploads/" . $generate . $template_name;
                     if (move_uploaded_file($temp_thumbnail_name, $test2)) {
                         chmod($test1, 0777);
-                        $folder2 = "https://www.rahulsaha.live/uploads/" . $generate . $thumbnail_name;
+                        $folder2 = "https://rahulsaha.live/uploads/" . $generate . $thumbnail_name;
 
                         //Upload that documents to database
                         //$db = new database();
@@ -87,16 +87,16 @@
     ?>
     <form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?> method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+            <label class="input-group-text" for="inputGroupFile01">Upload Template</label>
             <input type="file" class="form-control" id="inputGroupFile01" name="template">
         </div>
         <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+            <label class="input-group-text" for="inputGroupFile01">Upload Thumbnail</label>
             <input type="file" class="form-control" id="inputGroupFile01" name="thumbnail">
         </div>
 
-        <input type="text" name="check[]" id="" placeholder="school1">
-        <input type="text" name="check[]" id="" placeholder="school2">
+        <!-- <input type="text" name="check[]" id="" placeholder="school1">
+        <input type="text" name="check[]" id="" placeholder="school2"> -->
 
         <input type="submit" value="submit" name="submit">
     </form>

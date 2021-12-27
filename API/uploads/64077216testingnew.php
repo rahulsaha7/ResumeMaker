@@ -223,7 +223,7 @@
                 <td style="width: 50%;">
 
                   <div class="col-lg-4 col-md-5 w-30">
-                    <div class="avatar hover-effect bg-white shadow-sm p-1"><img src=<?php echo  $personal[0]['image'] ?> width="200" height="200" /></div>
+                    <div class="avatar hover-effect bg-white shadow-sm p-1"><img src=avatar.jpg width="200" height="200" /></div>
                   </div>
                 </td>
                 <td style="width:50%">

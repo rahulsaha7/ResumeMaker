@@ -122,14 +122,81 @@
 <body>
 
 
-    <table width="100%" border="0" align="center" style="height:600px;">
+    <table width="100%" border="0" align="center" height="600">
 
 
 
         <tr>
-            <td class="rows" style="width: 30%;">
+            <td class="rows" style="width: 30%;" height="600">
 
 
+                <figure class="profile-image-holder ps-3 pe-3">
+                    <img class="profile-image" src="avatar.jpg" alt="profile picture">
+                </figure>
+                <h4 class="px-3" style="margin-top: 100px;">Contact</h3>
+
+                    <address class="address-holder ps-3 pe-3 mt-2">
+
+
+                        <div>
+                            <i class="fas fa-phone-alt"></i>
+                            <span class="ps-2"><?php echo $personal[0]['phone'] ?></span>
+
+                        </div>
+                        <br>
+                        <div>
+                            <i class="far fa-envelope"></i>
+                            <span class="ps-2"><?php echo $email ?></span>
+                            <br>
+                        </div>
+
+                    </address>
+
+                    <br>
+                    <h4 class="mt-5 ps-3"> Education </h4>
+                    <section class="education-holder ps-3">
+                        <?php foreach ($edu as $value) {
+                        ?>
+                            <br>
+                            <div class="edus mt-3">
+                                <h5><?php echo $value['d_title'] ?></h5>
+                                <h6><?php
+                                    if ($value['present']) {
+                                        echo $value['s_year'] . "-" . "present";
+                                    } else {
+                                        echo $value['s_year'] . "-" . $value['e_year'];
+                                    }
+                                    ?></h6>
+                                <span><?php echo $value['i_name']; ?></span>
+                            </div>
+
+                        <?php
+
+                        }
+                        ?>
+
+                    </section>
+
+                    <section class="custom" style="visibility: hidden;">
+                        <?php foreach ($skills as $value) {
+                        ?>
+                            <p>a</p>
+
+                        <?php
+                        }
+
+
+                        foreach ($skills as $value) {
+
+                        ?>
+                            <p>a</p>
+                            <br>
+                        <?php
+                        }
+                        ?>
+
+
+                    </section>
 
 
             </td>

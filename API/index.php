@@ -91,6 +91,10 @@ class index
                 require_once __DIR__ . '/templates/resumes.php';
                 break;
 
+            case 'delete':
+                require_once __DIR__ . '/templates/delete.php';
+                break;
+
 
             default:
                 $result = array(

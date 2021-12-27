@@ -351,6 +351,8 @@ class generate
 
 
 
+            print_r($cus);
+            exit();
 
 
 
@@ -398,7 +400,7 @@ class generate
 
             $this->thumbnaillink = BASE_URL . '/thumbnails/' . $this->resumeNo . ".png";
 
-            $sql = "UPDATE `resume` SET `r_location` = '$this->data',`r_thumbnail` = '$this->thumbnaillink'  WHERE `resume`.`resumeNo` = $this->resumeNo";
+            $sql = "UPDATE `resume` SET `r_location` = '$this->data'  WHERE `resume`.`resumeNo` = $this->resumeNo";
 
             $this->db->query($sql);
             if ($this->db->sql_query->rowCount() > 0) {

@@ -2,7 +2,7 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-  
+
 require 'vendor/autoload.php';
 
 
@@ -13,7 +13,7 @@ class Mailer
     private $message;
     private $mail;
 
-    
+
 
     public function cleanData($data)
     {
@@ -30,11 +30,11 @@ class Mailer
             $this->mail = new PHPMailer(true);
             $this->mail->SMTPDebug = 2;
             $this->mail->isSMTP();
-            $this->mail->SMTPAuth   = true;    
+            $this->mail->SMTPAuth   = true;
             $this->mail->Host = 'smtp.goggle.com;';
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'rsahagdrive@gmail.com';
-            $this->mail->Password = 'shinchan7242';
+            $this->mail->Password = '';
             $this->mail->SMTPSecure = 'tls';
             $this->mail->Port = 587;
             $this->mail->setFrom('rsahagdrive@gmail.com', 'Esay Resume');
@@ -47,11 +47,9 @@ class Mailer
             $this->mail->send();
             $this->data = true;
             $this->message = "successfull";
-
         } catch (Exception $e) {
             $this->data = false;
             $this->message = "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
-
 };
