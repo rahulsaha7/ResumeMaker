@@ -64,5 +64,3 @@ class Mailer
         }
     }
 };
-
-//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
