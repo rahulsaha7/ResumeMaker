@@ -29,7 +29,7 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
-        $this->env = 'developments';
+        $this->env = 'development';
         if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
         } else {
@@ -64,7 +64,7 @@ class index
 
                 require_once __DIR__ . '/templates/Logout.php';
                 break;
-            case 'forgot-password':
+            case 'forgot':
 
                 require_once __DIR__ . '/templates/forgot.php';
                 break;
@@ -94,7 +94,13 @@ class index
             case 'delete':
                 require_once __DIR__ . '/templates/delete.php';
                 break;
+            case 'verify':
+                require_once __DIR__ . '/templates/Verify.php';
+                break;
 
+            case 'reset':
+                require_once __DIR__ . '/templates/resetPassword.php';
+                break;
 
             default:
                 $result = array(
