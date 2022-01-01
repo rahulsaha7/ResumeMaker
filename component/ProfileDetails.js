@@ -32,29 +32,29 @@ export default class ProfileDetails extends Component {
                 image: '',
             },
             education:{
-                instituteName:'Pondicherry University',
-                degreeTitle:'Masters of Computer Application',
-                startYear:'2020',
-                endYear:'2022',
+                instituteName:'',
+                degreeTitle:'',
+                startYear:'',
+                endYear:'',
                 tillPresent:true,
-                cgpa:'8.62',
-                summary:'this is summary'
+                cgpa:'',
+                summary:''
                 },
             experience:{
-                companyName:'KS Tech Pvt Limited',
-                jobTitle:'Software Engineer',
-                startDate:'5/2020',
-                endDate:'5/2022',
+                companyName:'',
+                jobTitle:'',
+                startDate:'',
+                endDate:'',
                 tillPresent:true,
-                summary:'this is summary'
+                summary:''
                 },
             projects:{
-                projectName:'KS Tech Pvt Limited',
-                projectDescription:'Software Engineer',
-                startDate:'5/2020',
-                endDate:'5/2022',
+                projectName:'',
+                projectDescription:'',
+                startDate:'',
+                endDate:'',
                 tillPresent:true,
-                summary:'this is summary'
+                summary:''
                 },
             skills:{
                 skillName:'',
@@ -105,12 +105,12 @@ export default class ProfileDetails extends Component {
                 break;
             case 'projects':this.setState({
                                 projects:{
-                                    projectName:'KS Tech Pvt Limited',
-                                    projectDescription:'Software Engineer',
-                                    startDate:'5/2020',
-                                    endDate:'5/2022',
+                                    projectName:'',
+                                    projectDescription:'',
+                                    startDate:'',
+                                    endDate:'',
                                     tillPresent:true,
-                                    summary:'this is summary'
+                                    summary:''
                                     }
                                 });
                   break;
@@ -347,14 +347,14 @@ export default class ProfileDetails extends Component {
                         <View style={styles.durationContainer}>
                             <TextInput
                                 placeholder="Start Year"
-                                keyboardType="numeric"
+                                keyboardType="default"
                                 style={[styles.inputStyle,{width:'48%'}]}
                                 value={this.state.education.startYear}
                                 onChangeText={(value)=>this._onChangeInput('education','startYear',value)}
                                 />
                             <TextInput
                                 placeholder="End Year"
-                                keyboardType="numeric"
+                                keyboardType="default"
                                 style={[styles.inputStyle,{width:'48%'}]}
                                 value={this.state.education.endYear}
                             onChangeText={(value)=>this._onChangeInput('education','endYear',value)}
@@ -443,19 +443,19 @@ export default class ProfileDetails extends Component {
                         placeholder="Job Title"
                         style={styles.inputStyle}
                         value={this.state.experience.jobTitle}
-                        onChangeText={(value)=>this._onChangeInput('experience','companyName',value)}
+                        onChangeText={(value)=>this._onChangeInput('experience','jobTitle',value)}
                         />
                     <View style={styles.durationContainer}>
                         <TextInput
                             placeholder="Start Date"
-                            keyboardType="numeric"
+                            keyboardType="default"
                             style={[styles.inputStyle,{width:'48%'}]}
                             value={this.state.experience.startDate}
-                            startDateonChangeText={(value)=>this._onChangeInput('experience','startDate',value)}
+                            onChangeText={(value)=>this._onChangeInput('experience','startDate',value)}
                         />
                         <TextInput
                             placeholder="End Date"
-                            keyboardType="numeric"
+                            keyboardType="default"
                             style={[styles.inputStyle,{width:'48%'}]}
                             value={this.state.experience.endDate}
                             onChangeText={(value)=>this._onChangeInput('experience','endDate',value)}
@@ -464,7 +464,7 @@ export default class ProfileDetails extends Component {
 
                     <View style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
                         <Text>Till Present</Text>
-                        <Switch color="#555" value={this.state.experience.tillPresent} onValueChange={(value)=>{this._onChangeInput('experience','tillPresnet',value)}} />
+                        <Switch color="#555" value={this.state.experience.tillPresent} onValueChange={(value)=>{this._onChangeInput('experience','tillPresent',value)}} />
                     </View>
                     
                     <TextInput
@@ -542,14 +542,14 @@ export default class ProfileDetails extends Component {
                     <View style={styles.durationContainer}>
                         <TextInput
                             placeholder="Start Date"
-                            keyboardType="numeric"
+                            keyboardType="default"
                             style={[styles.inputStyle,{width:'48%'}]}
                             value={this.state.projects.startDate}
                             onChangeText={(value)=>this._onChangeInput('projects','startDate',value)}
                             />
                         <TextInput
                             placeholder="End Date"
-                            keyboardType="numeric"
+                            keyboardType="default"
                             style={[styles.inputStyle,{width:'48%'}]}
                             value={this.state.projects.endDate}
                             onChangeText={(value)=>this._onChangeInput('projects','endDate',value)}
@@ -558,7 +558,7 @@ export default class ProfileDetails extends Component {
 
                     <View style={{display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
                         <Text>Till Present</Text>
-                        <Switch color="#555" value={this.state.projects.tillPresent} onValueChange={(value)=>{this._onChangeInput('projects','tillPresnet',value)}} />
+                        <Switch color="#555" value={this.state.projects.tillPresent} onValueChange={(value)=>{this._onChangeInput('projects','tillPresent',value)}} />
                     </View>
                     
                     <TextInput

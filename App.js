@@ -53,11 +53,11 @@ export default class App extends React.Component{
 
   componentDidMount(){
     this.isUserNew();
-    this.isUserLoggedIn();
     this.updateConnection();
     setTimeout(()=>{
       this.setState({showLoading:false});
-    },2000)
+    },2000);
+    this.isUserLoggedIn();
   }
 
 
@@ -70,8 +70,8 @@ export default class App extends React.Component{
       this.setState({
         isConnected:state.isConnected
       })
-      console.log('is connected');
-      console.log(state.isConnected);
+      //console.log('is connected');
+      //console.log(state.isConnected);
     });
 }
 
@@ -94,7 +94,8 @@ export default class App extends React.Component{
         })
       }
     } catch(e) {
-      console.log(e);
+      //console.log(e);
+      alert('Something went wrong');
     }
   }
 
@@ -104,7 +105,6 @@ export default class App extends React.Component{
       let value =  jsonValue != null ? jsonValue : null;
       if(value){
         let decoded = jwt_decode(value);
-        console.log(decoded);
         this.setState({
           token:value,
           isLoggedIn:true,
@@ -114,7 +114,8 @@ export default class App extends React.Component{
         })
       }
     } catch(e) {
-      console.log(e);
+      //console.log(e);
+      alert('Something went wrong');
     }
   }  
 /**
@@ -128,7 +129,8 @@ export default class App extends React.Component{
       let value =  jsonValue != null ? JSON.parse(jsonValue) : null;
       return value;
     } catch(e) {
-      console.log(e);
+      //console.log(e);
+      alert('Something went wrong');
     }
   }
 
@@ -146,8 +148,8 @@ export default class App extends React.Component{
     try {
       await AsyncStorage.setItem(key, value)
     } catch (e) {
-      console.log(e);
-        alert("Error","Something went wrong in the onboarding screen");
+      //console.log(e);
+        alert("Something went wrong");
     }
   }
 

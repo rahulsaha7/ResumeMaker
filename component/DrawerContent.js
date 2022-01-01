@@ -21,7 +21,8 @@ class DrawerContent extends React.Component{
             });
     
           } catch(e) {
-            console.log(e);
+            //console.log(e);
+            alert('Something went wrong');
           }
     }
     
@@ -40,13 +41,13 @@ class DrawerContent extends React.Component{
             // dismissed
           }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
           Alert.alert('Something went wrong');
         }
     }
     render(){
         let props = this.props;
-        console.log(this.context.name);
+        //console.log(this.context.name);
         return (     
             <DrawerContentScrollView {...props} style={{backgroundColor:'white'}} contentContainerStyle={{paddingTop:0,backgroundColor:'#92B2FD'}}>
 

@@ -93,9 +93,9 @@ class SignIn extends ValidationComponent {
                             email: this.state.username,
                             password: this.state.password
                     }
-                    console.log(params);
+                    //console.log(params);
                     const response = await axios.post(HOST + '/login',qs.stringify(params));
-                    console.log(response);
+                    //console.log(response);
                     if(response.status === 200){
                         if(response.data.login === true){
                             //alert(response.data.token);
@@ -132,7 +132,8 @@ class SignIn extends ValidationComponent {
                         });
                     }
                 }catch(error){
-                    console.log(error);
+                    //console.log(error);
+                    Alert.alert('Error','Something went wrong');
                 }
             }else{
                 //if network is not connected
@@ -161,8 +162,6 @@ class SignIn extends ValidationComponent {
       
 
     render() {
-        console.log('test context');
-        console.log(this.context.isConnected);
         const {colors} = this.props.theme;
         const {showAlert,showModalProgress,modalTitle,modalMessage,closeOnTouchOutside,usernameError,passwordError} = this.state;
         return (

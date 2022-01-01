@@ -129,9 +129,9 @@ class SignUp extends ValidationComponent {
                             phone: this.state.phone,
                             password: this.state.password
                     }
-                    console.log(params);
+                    //console.log(params);
                     const response = await axios.post(HOST+'/signUp',qs.stringify(params));
-                    console.log(response);
+                    //console.log(response);
                     if(response.status === 200){
                         if(response.data.data === true){
                             this.setState({
@@ -170,7 +170,8 @@ class SignUp extends ValidationComponent {
                         });
                     }
                 }catch(error){
-                    console.log(error);
+                    //console.log(error);
+                    Alert.alert('Error','Something went wrong');
                 }
             }else{
                 //if network is not connected
@@ -197,10 +198,10 @@ class SignUp extends ValidationComponent {
     }
 
     render() {
-        console.log(this.props.rules);
+        //console.log(this.props.rules);
         const {colors} = this.props.theme;
         const {name,email,phone,password,confirmPassword,showAlert,showModalProgress,confirmText,showConfirmButton,onConfirmPressed,modalTitle,modalMessage,closeOnTouchOutside,nameError,emailError,phoneError,passwordError, confirmPasswordError } = this.state;
-        console.log(this.state);
+        //console.log(this.state);
         return (
             <React.Fragment>
                 <StatusBar style="light"/>

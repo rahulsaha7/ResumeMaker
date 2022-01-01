@@ -29,7 +29,7 @@ export default class ChooseTemplate extends Component {
     _fetchTemplates = async() => {
 
         if(this.context.isConnected){
-            console.log(this.context.token);
+            //console.log(this.context.token);
             try{
                 const response = await axios.post(HOST + '/template',{},{
                     headers:{
@@ -38,10 +38,10 @@ export default class ChooseTemplate extends Component {
                 });
 
                 if(response.status === 200){
-                    console.log(response.data);
+                    //console.log(response.data);
                     if(response.data.success === true){
-                        console.log('---------------------resumes----------------');
-                        console.log(response.data.data);
+                        //console.log('---------------------resumes----------------');
+                        //console.log(response.data.data);
                         this.setState({templates:response.data.data});
                     }else{
                         alert('Someting went wrong! Please restart the app');
@@ -51,7 +51,8 @@ export default class ChooseTemplate extends Component {
                 }
     
             }catch(error){
-                console.log(error);
+                //console.log(error);
+                alert('Something went wrong');
             }
         }else{
             alert('no network');
@@ -75,8 +76,8 @@ export default class ChooseTemplate extends Component {
 
     render() {
         let {checkid}  = this.state;
-        console.log('resuem data printing');
-        console.log(this.props.route.params.resumeData);
+        //console.log('resuem data printing');
+        //console.log(this.props.route.params.resumeData);
         if(this.state.showLoading)
             return <ActivityLoading msg="Loading Templates"/>
         else
@@ -92,7 +93,7 @@ export default class ChooseTemplate extends Component {
                                 <Pressable
                                     onPress={()=>this.setState({checkid:template.id})}
                                 >
-                                    <Image source={{uri:template.thumbnail}} style={styles.image} resizeMode="contain"/>
+                                    <Image source={{uri:template.thumbnail}} style={styles.image} resizeMode="stretch"/>
                                 </Pressable>
                                 {checkid===template.id?
                                     <View style={styles.checkbox}>
@@ -146,11 +147,12 @@ const styles = StyleSheet.create({
         width:'50%',
         height:200,
         padding:5,
+        marginVertical:5,
     },
     image:{
         borderRadius: 5,
         width: '100%',
-        height:200
+        height:200,
     },
     checkbox:{
         position:'absolute',
@@ -162,9 +164,10 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:'#0008',
-        marginVertical:5,
-        marginHorizontal:16,
         borderRadius:5,
+        height:200,
+        marginVertical:5,
+        marginHorizontal:5,
     },
     nextButton:{
         paddingVertical: 10,

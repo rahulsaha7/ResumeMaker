@@ -62,8 +62,7 @@ class Preview extends Component {
     }
 
     generatePdf = async()=>{
-        console.log('-----------------------------------------------generate pdf---');
-        console.log(this.props.route.params.templateData);
+        //console.log(this.props.route.params.templateData);
         if(this.context.isConnected){
             try{
 
@@ -72,7 +71,7 @@ class Preview extends Component {
                         "Authorization":this.context.token,
                     }
                 });
-                console.log(response);
+               // console.log(response);
                 if(response.status === 200){
                     if(response.data.success === true){
 
@@ -83,7 +82,7 @@ class Preview extends Component {
                             resumeImage:response.data.thumbnail,
                             images:tempImages
                         })
-                        console.log(response.data.data);
+                       // console.log(response.data.data);
                     }else{
                         //failed to generate pdf
                         this.setState({
@@ -107,7 +106,8 @@ class Preview extends Component {
                     });
                 }
             }catch(error){
-                console.log(error);
+                //console.log(error);
+                alert('Something went wrong');
             }
         }else{
             //if network is not connected
@@ -150,13 +150,14 @@ class Preview extends Component {
 
         const uri = this.state.resumeLink;
         let fileUri = FileSystem.documentDirectory + this.context.name+"_EasyResume.pdf";
-        console.log(fileUri);
+        //console.log(fileUri);
         FileSystem.downloadAsync(uri, fileUri)
         .then(({ uri }) => {
             this.saveFile(uri);
           })
           .catch(error => {
-            console.error(error);
+            //console.error(error);
+            alert('Something went wrong');
           })
     }
 
@@ -171,7 +172,21 @@ class Preview extends Component {
                 snackbarText: 'Download completed. Saved in Picture/EasyResume'
             });
         }catch(e){
-            console.log('permision rejected');
+            try{
+                MediaLibrary.requestPermissionsAsync();
+                const asset = await MediaLibrary.createAssetAsync(fileUri);
+                let data = await MediaLibrary.createAlbumAsync("EasyResume", asset, false);
+    
+                this.setState({
+                    showSnackbar:true,
+                    snackbarText: 'Download completed. Saved in Picture/EasyResume'
+                });
+            }catch(e){
+                this.setState({
+                    showSnackbar:true,
+                    snackbarText: 'File Permission Denied'
+                });
+            }
         }
     }
     render() {
@@ -254,7 +269,7 @@ class Preview extends Component {
                 onDismiss={()=>this.setState({showSnackbar:false})}
                 duration={15000}
                 action={{
-                label: 'Undo',
+                label: 'Close',
                 onPress: () => {
                     this.setState({showSnackbar:false})
                 },

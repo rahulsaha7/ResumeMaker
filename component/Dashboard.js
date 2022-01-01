@@ -11,6 +11,7 @@ import { HOST } from './config';
 
 import ActivityLoading from './ActivityLoading';
 import { ERContext } from '../ERContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { color } from 'react-native-reanimated';
 //import { ScrollView } from 'react-native-gesture-handler';
 
@@ -35,10 +36,10 @@ export class Dashboard extends Component {
         this._fetchResumes();
     }
 
-    _fetchResumes = async() => {
+    _fetchResumes = async () => {
 
         if(this.context.isConnected){
-            console.log(this.context.token);
+            //console.log(this.context.token);
             try{
                 const response = await axios.post(HOST + '/resumes',{},{
                     headers:{
@@ -47,23 +48,28 @@ export class Dashboard extends Component {
                 });
 
                 if(response.status === 200){
-                    console.log(response.data);
                     if(response.data.success === true){
-                        console.log('---------------------resumes----------------');
-                        console.log(response.data.data);
+                        //console.log(response.data.data);
                         this.setState({resumes:response.data.data});
                     }else{
-                        alert('Someting went wrong! Please restart the app');
+                        if(response.data.message === "Expired token"){
+                            alert('Session Expired. Login again');
+                            await AsyncStorage.removeItem('token');
+                            this.context.changeData('isLoggedIn',false);
+                        }else{
+                            alert('Someting went wrong! Please restart the app');
+                        }
                     }
                 }else{
-                    alert('401');
+                    alert('Unauthorized Acccess');
                 }
     
             }catch(error){
-                console.log(error);
+                alert('Something went wrong')
+                //console.log(error);
             }
         }else{
-            alert('no network');
+            alert('No network');
         }
         this.setState({showLoading:false,refreshing:false});
         
@@ -108,7 +114,7 @@ export class Dashboard extends Component {
                         }>
                         <View style={styles.resumeContainer}>
                             {
-                                this.state.resumes.map((resume, index)=>{
+                                this.state.resumes?.map((resume, index)=>{
                                     return <Pressable
                                                 key={index}
                                                 onPress={()=>{this.props.navigation.push('Preview',{resume:resume})}}
