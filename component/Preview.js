@@ -12,6 +12,8 @@ import axios from 'axios';
 import ActivityLoading from './ActivityLoading';
 import { HOST, LoaderPng } from './config';
 import ResumePlaceholder from './../assets/resumePlaceholder.png'
+import qs from 'qs'
+
 class Preview extends Component {
     constructor(props) {
         super(props)
@@ -122,6 +124,76 @@ class Preview extends Component {
         this.setState({showLoading:false})
     }
 
+    onDelete = async()=>{
+        this.setState({
+            showAlert: true,
+            showModalProgress:true,
+            modalTitle:"",
+            modalMessage:"Deleting",
+            closeOnTouchOutside: false,
+        });
+        if(this.context.isConnected){
+            try{
+                const params={
+                    resumeNo: this.props.route.params.resume.resumeNo,
+                }
+
+                const response = await axios.post(HOST+'/delete',qs.stringify(params),{
+                    headers:{
+                        "Authorization":this.context.token,
+                    }
+                });
+               // console.log(response);
+                if(response.status === 200){
+                    if(response.data.success === true){
+
+                        //deleted successfully
+                        this.setState({
+                            showAlert: true,
+                            showModalProgress:false,
+                            modalTitle:"Success",
+                            modalMessage: 'Resume deleted successfully',
+                            closeOnTouchOutside: true,
+                        });
+                        this.props.navigation.goBack();
+                       // console.log(response.data.data);
+                    }else{
+                        //failed to delete
+                        this.setState({
+                            showAlert: true,
+                            showModalProgress:false,
+                            modalTitle:"Failed",
+                            modalMessage: 'Failed to delete resume',
+                            closeOnTouchOutside: true,
+                        });
+                    }
+
+                }else{
+                    //request status is not  200
+                    this.setState({
+                        showAlert: true,
+                        showModalProgress:false,
+                        modalTitle:"Server error",
+                        modalMessage: "Something went wrong in the server",
+                        closeOnTouchOutside: true,
+                    });
+                }
+            }catch(error){
+                //console.log(error);
+                alert('Something went wrong');
+            }
+        }else{
+            //if network is not connected
+            this.setState({
+                showAlert: true,
+                showModalProgress:false,
+                modalTitle:"Ooops !",
+                modalMessage:"No Internet Connection found\n Check your connection",
+                closeOnTouchOutside: true,
+            });
+        }
+        this.hideAlert();
+    }
     onShare = async () => {
         try {
           const result = await Share.share({
@@ -242,6 +314,17 @@ class Preview extends Component {
                             </Button>
                     </LinearGradient>
                 </View>
+                
+                {
+                    this.props.route.params.resume?
+                
+                        <View style={[styles.ButtonContainer,{backgroundColor:'red',borderRadius:30}]}>
+                            <Button icon="delete" style={[styles.button,{padding:0}]} labelStyle={{paddingHorizontal:11,paddingVertical:5}} mode="text" color="#ffffff" onPress={this.onDelete}>
+                                <Text style={styles.buttonText}>Delete</Text>
+                            </Button>
+                        </View>
+                    :null
+                }
             </View>
             <Modal visible={this.state.preview} transparent={true}>
                 <ImageViewer

@@ -141,10 +141,11 @@ class SignUp extends ValidationComponent {
                                 modalMessage: response.data.message,
                                 closeOnTouchOutside: false,
                                 showConfirmButton:true,
-                                confirmText:'Goto Dashboard',
+                                confirmText:'Goto Login',
                                 onConfirmPressed:()=>{
                                     this.hideAlert();
-                                    this.context.changeState('isLoggedIn',true);
+                                    this.context.changeState('isLoggedIn',false);
+                                    this.props.openSignInPage();
                                 }
                             });
                             //this.props.changeState('isLoggedIn',true);

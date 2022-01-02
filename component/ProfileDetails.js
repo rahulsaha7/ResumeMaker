@@ -217,7 +217,7 @@ export default class ProfileDetails extends Component {
         this.setState({
             resumeData: resume_data,
         },()=>{
-            console.log(resume_data);
+            //console.log(resume_data);
             this.props.navigation.push('ChooseTemplate',{resumeData:resume_data});
         });
     }
