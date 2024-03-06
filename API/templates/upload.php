@@ -62,7 +62,7 @@
                     $folder1 = "uploads/" . $generate . $template_name;
                     if (move_uploaded_file($temp_thumbnail_name, $test2)) {
                         chmod($test1, 0777);
-                        $folder2 = "https://rahulsaha.live/uploads/" . $generate . $thumbnail_name;
+                        $folder2 = "https://resumemaker-production.up.railway.app/uploads/" . $generate . $thumbnail_name;
 
                         //Upload that documents to database
                         //$db = new database();
