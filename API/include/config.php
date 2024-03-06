@@ -3,7 +3,7 @@
 
 $env2 = 'development';
 
-if ($env2 == 'development') {
+if ($env2 == 'production') {
 
 
 
@@ -14,9 +14,9 @@ if ($env2 == 'development') {
     defined('DB_PASS') ? NULL : define('DB_PASS', '');
     defined('DB_NAME') ? NULL : define('DB_NAME', 'MAD');
 } else {
-    defined('BASE_URL') ? NULL : define('BASE_URL', 'https://rahulsaha.live');
-    defined('DB_HOST') ? NULL : define('DB_HOST', 'localhost');
-    defined('DB_USER') ? NULL : define('DB_USER', 'maldanat_easyresume');
-    defined('DB_PASS') ? NULL : define('DB_PASS', 'easyresume');
-    defined('DB_NAME') ? NULL : define('DB_NAME', 'maldanat_downtimealert');
+    defined('BASE_URL') ? NULL : define('BASE_URL', '');
+    defined('DB_HOST') ? NULL : define('DB_HOST', 'roundhouse.proxy.rlwy.net');
+    defined('DB_USER') ? NULL : define('DB_USER', 'root');
+    defined('DB_PASS') ? NULL : define('DB_PASS', 'CeAHfd6F5daehDacaFbbcbCAGe6C6BDd');
+    defined('DB_NAME') ? NULL : define('DB_NAME', 'railway');
 }

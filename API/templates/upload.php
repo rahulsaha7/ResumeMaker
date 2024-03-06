@@ -17,12 +17,12 @@
 
 
 
-            $env = 'lv';
-            if ($env == 'lv') {
-                $conn = new PDO("mysql:host=localhost;dbname=maldanat_downtimealert", 'maldanat_easyresume', 'easyresume');
-            } else {
-                $conn = new PDO("mysql:host=localhost;dbname=MAD", 'root', 'Rahul@7242');
-            }
+            // $env = 'lv';
+            // if ($env == 'lv') {
+                $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . "", DB_USER, DB_PASS);
+            // } else {
+            //     $conn = new PDO("mysql:host=localhost;dbname=MAD", 'root', 'Rahul@7242');
+            // }
 
 
 

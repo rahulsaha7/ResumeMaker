@@ -29,7 +29,7 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
-        $this->env = 'development';
+        $this->env = 'production';
         if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
         } else {
