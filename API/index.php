@@ -29,12 +29,11 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
-        echo $this->url;
         $this->env = 'production';
         if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
         } else {
-            $this->SwitchURL = $this->url[4];
+            $this->SwitchURL = $this->url[3];
         }
 
         $this->route();
