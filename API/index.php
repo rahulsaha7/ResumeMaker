@@ -4,13 +4,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/include/init.php';
 
-
-
-
-
-
-
-
 session_start();
 error_reporting(0);
 
@@ -29,6 +22,7 @@ class index
     public function __construct()
     {
         $this->url = baseURL();
+        echo '<pre>'; print_r($this->url); echo '</pre>'; 
         $this->env = 'production';
         if ($this->env == 'development') {
             $this->SwitchURL = $this->url[6];
